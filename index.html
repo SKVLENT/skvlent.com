@@ -23,6 +23,12 @@
       margin-bottom: 0.2em;
       letter-spacing: 0.05em;
     }
+    .intro {
+      font-size: 1.2rem;
+      color: #bbb;
+      max-width: 600px;
+      margin-bottom: 2em;
+    }
     .quote {
       font-style: italic;
       font-size: 1.5rem;
@@ -46,12 +52,15 @@
     .links a {
       color: #fff;
       text-decoration: none;
-      border: 1px solid #fff;
       padding: 0.5em 1.5em;
       border-radius: 8px;
       transition: all 0.3s ease;
       display: inline-block;
       text-align: center;
+      border: none;
+      background: transparent;
+      font-weight: bold;
+      font-size: 1.1rem;
     }
     .links a:hover {
       background: #fff;
@@ -82,6 +91,16 @@
 <body>
   <h1>SKVLENT</h1>
   
+  <!-- Информация обо мне -->
+  <div class="intro">
+    <p><strong>Ильяс, 24 года</strong><br />
+       Самара, Российская Федерация<br />
+       Творческий деятель, музыкальный продюсер<br />
+       Более 1 миллиона прослушиваний на стриминговых площадках<br />
+       Более 100 тысяч слушателей в месяц
+    </p>
+  </div>
+
   <!-- Цитата, которая будет меняться -->
   <div class="quote" id="quote">
     <!-- Здесь будет отображаться цитата -->
