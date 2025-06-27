@@ -36,35 +36,21 @@
       color: #888;
       margin-top: 0.3em;
     }
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-      width: 100%;
-      max-width: 400px;
-    }
-    .links a {
+    .channel-link {
+      margin-top: 2em;
+      padding: 1em 2.5em;
+      background: transparent;
       color: #fff;
       text-decoration: none;
-      padding: 0.5em 1.5em;
+      border: 2px solid #fff;
       border-radius: 8px;
-      transition: all 0.3s ease;
-      display: inline-block;
-      text-align: center;
-      border: none;
-      background: transparent;
+      font-size: 1.2rem;
       font-weight: bold;
-      font-size: 1.1rem;
+      transition: all 0.3s ease;
     }
-    .links a:hover {
+    .channel-link:hover {
       background: #fff;
       color: #000;
-    }
-    @media (min-width: 600px) {
-      .links {
-        flex-direction: row;
-        justify-content: center;
-      }
     }
     .rules {
       margin-top: 3em;
@@ -92,11 +78,8 @@
     </p>
   </div>
 
-  <div class="links">
-    <a href="https://instagram.com/skvlent" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer">Telegram</a>
-    <a href="https://youtube.com/@skvlent" target="_blank" rel="noopener noreferrer">YouTube</a>
-  </div>
+  <!-- Ссылка на канал -->
+  <a class="channel-link" href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer">Мой канал</a>
 
   <script>
     // Массив с цитатами
