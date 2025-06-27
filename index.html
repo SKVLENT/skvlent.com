@@ -1,40 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SKVLENT</title>
   <style>
     body {
       margin: 0;
       background: #000;
       color: #fff;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       text-align: center;
+      padding: 0 1rem;
     }
-
     h1 {
       font-size: 3rem;
       margin-bottom: 0.2em;
+      letter-spacing: 0.05em;
     }
-
-    p {
+    .quote {
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #ccc;
+      max-width: 600px;
+      margin-bottom: 1.5em;
+    }
+    .author {
+      font-weight: 600;
       font-size: 1.2rem;
       color: #888;
+      margin-top: 0.3em;
     }
-
     .links {
-      margin-top: 2em;
       display: flex;
       flex-direction: column;
       gap: 1em;
+      width: 100%;
+      max-width: 400px;
     }
-
     .links a {
       color: #fff;
       text-decoration: none;
@@ -42,28 +50,32 @@
       padding: 0.5em 1.5em;
       border-radius: 8px;
       transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
     }
-
     .links a:hover {
       background: #fff;
       color: #000;
     }
-
     @media (min-width: 600px) {
       .links {
         flex-direction: row;
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
   <h1>SKVLENT</h1>
-  <p>Follow me online</p>
+  <div class="quote">
+    «Говори мало, делай много.»
+    <div class="author">— Лао-цзы</div>
+  </div>
 
   <div class="links">
-    <a href="https://instagram.com/skvlent" target="_blank">Instagram</a>
-    <a href="https://t.me/skvlent" target="_blank">Telegram</a>
-    <a href="https://youtube.com/@skvlent" target="_blank">YouTube</a>
+    <a href="https://instagram.com/skvlent" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer">Telegram</a>
+    <a href="https://youtube.com/@skvlent" target="_blank" rel="noopener noreferrer">YouTube</a>
   </div>
 </body>
 </html>
