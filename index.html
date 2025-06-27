@@ -38,19 +38,18 @@
     }
     .channel-button {
       margin-top: 2em;
-      padding: 1em 2em;
-      background: #fff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      display: inline-block;
+      padding: 1em;
+      background: transparent;
+      border: none;
+      cursor: pointer;
     }
-    .channel-button:hover {
-      background: #ccc;
-      color: #000;
+    .channel-button img {
+      width: 50px;
+      height: 50px;
+      transition: opacity 0.3s ease;
+    }
+    .channel-button:hover img {
+      opacity: 0.7;
     }
     .rules {
       margin-top: 1.5em; /* Уменьшенный интервал между правилами и кнопкой */
@@ -78,8 +77,10 @@
     </p>
   </div>
 
-  <!-- Кнопка для перехода в канал -->
-  <a class="channel-button" href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer"></a>
+  <!-- Кнопка с логотипом Telegram -->
+  <a href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer" class="channel-button">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
+  </a>
 
   <script>
     // Массив с цитатами
