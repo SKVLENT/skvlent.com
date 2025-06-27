@@ -81,9 +81,10 @@
 </head>
 <body>
   <h1>SKVLENT</h1>
-  <div class="quote">
-    «Говори мало, делай много.»
-    <div class="author">— Лао-цзы</div>
+  
+  <!-- Цитата, которая будет меняться -->
+  <div class="quote" id="quote">
+    <!-- Здесь будет отображаться цитата -->
   </div>
 
   <div class="links">
@@ -100,5 +101,31 @@
       Я <strong>ничего не продаю</strong> и <strong>ничего не покупаю</strong>.
     </p>
   </div>
+
+  <script>
+    // Массив с цитатами
+    const quotes = [
+      { text: "Простота — это высшая степень изощрённости.", author: "Леонардо да Винчи" },
+      { text: "Делай, что должен — и будь, что будет.", author: "Марк Аврелий" },
+      { text: "Говори мало, делай много.", author: "Лао-цзы" },
+      { text: "Мы — это то, что мы делаем постоянно.", author: "Аристотель" },
+      { text: "Тишина — тоже текст.", author: "Александр Солженицын" },
+      { text: "Сила в спокойствии.", author: "Конфуций" },
+      { text: "Путь в тысячу ли начинается с одного шага.", author: "Лао-цзы" },
+      { text: "Истинная свобода — в умении отказаться.", author: "Сенека" },
+      { text: "Мы видим мир не таким, каков он есть, а таким, каковы мы.", author: "Иммануил Кант" },
+      { text: "Реальность — это то, что не исчезает, когда ты перестаёшь в неё верить.", author: "Филип К. Дик" }
+    ];
+
+    // Функция для случайного выбора цитаты
+    function getRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const quote = quotes[randomIndex];
+      return `"${quote.text}"<br /><div class="author">— ${quote.author}</div>`;
+    }
+
+    // Устанавливаем случайную цитату на страницу
+    document.getElementById('quote').innerHTML = getRandomQuote();
+  </script>
 </body>
 </html>
