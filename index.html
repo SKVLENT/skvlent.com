@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>skvlent</title>
+  <title>SKVLENT</title>
   <style>
     body {
       margin: 0;
@@ -14,43 +14,56 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
     }
+
     h1 {
       font-size: 3rem;
-      margin: 0.5em 0;
+      margin-bottom: 0.2em;
     }
+
     p {
       font-size: 1.2rem;
-      color: #aaa;
+      color: #888;
     }
+
     .links {
       margin-top: 2em;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
     }
+
     .links a {
-      display: inline-block;
-      margin: 0 1em;
       color: #fff;
       text-decoration: none;
       border: 1px solid #fff;
-      padding: 0.5em 1em;
+      padding: 0.5em 1.5em;
       border-radius: 8px;
       transition: all 0.3s ease;
     }
+
     .links a:hover {
       background: #fff;
       color: #000;
     }
+
+    @media (min-width: 600px) {
+      .links {
+        flex-direction: row;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>skvlent</h1>
-  <p>coming soon.</p>
+  <h1>SKVLENT</h1>
+  <p>Follow me online</p>
 
   <div class="links">
-    <a href="https://t.me/твойник" target="_blank">Telegram</a>
-    <a href="mailto:you@example.com">Email</a>
+    <a href="https://instagram.com/skvlent" target="_blank">Instagram</a>
+    <a href="https://t.me/skvlent" target="_blank">Telegram</a>
+    <a href="https://youtube.com/@skvlent" target="_blank">YouTube</a>
   </div>
 </body>
 </html>
