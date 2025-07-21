@@ -7,7 +7,8 @@
   <style>
     body {
       margin: 0;
-      background: #000;
+      padding: 0;
+      background-color: #000;
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
@@ -16,96 +17,37 @@
       justify-content: center;
       min-height: 100vh;
       text-align: center;
-      padding: 0 1rem;
+      padding: 2rem;
     }
+
     h1 {
       font-size: 3rem;
-      margin-bottom: 0.2em;
+      margin-bottom: 0.5em;
       letter-spacing: 0.05em;
     }
-    .quote {
-      font-style: italic;
-      font-size: 1.5rem;
-      color: #ccc;
-      max-width: 600px;
-      margin-bottom: 1em; /* Уменьшенный интервал между цитатой и правилами */
-    }
-    .author {
-      font-weight: 600;
+
+    p {
       font-size: 1.2rem;
-      color: #888;
-      margin-top: 0.3em;
-    }
-    .channel-button {
-      margin-top: 2em;
-      padding: 1em;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
-    .channel-button img {
-      width: 50px;
-      height: 50px;
-      transition: opacity 0.3s ease;
-    }
-    .channel-button:hover img {
-      opacity: 0.7;
-    }
-    .rules {
-      margin-top: 1.5em; /* Уменьшенный интервал между правилами и кнопкой */
       max-width: 600px;
-      font-size: 1rem;
-      color: #bbb;
       line-height: 1.6;
+      color: #ccc;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
 <body>
   <h1>SKVLENT</h1>
-  
-  <!-- Цитата, которая будет меняться -->
-  <div class="quote" id="quote">
-    <!-- Здесь будет отображаться цитата -->
-  </div>
+  <p>
+    Ильяс Скаев, известный как «SKVLENT», родился в 2001 году в городе Самара, Российской Федерации, является композитором, продюсером и автором независимых музыкальных проектов.
+  </p>
 
-  <!-- Правила письма -->
-  <div class="rules">
-    <p>
-      Если вы хотите мне написать — делайте это <strong>кратко и по делу</strong>.<br />
-      Без «привет», «как дела» и прочей вежливой воды.<br />
-      Я <strong>ничего не продаю</strong> и <strong>ничего не покупаю</strong>.
-    </p>
-  </div>
-
-  <!-- Кнопка с логотипом Telegram -->
-  <a href="https://t.me/skvlent" target="_blank" rel="noopener noreferrer" class="channel-button">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
-  </a>
-
-  <script>
-    // Массив с цитатами
-    const quotes = [
-      { text: "Простота — это высшая степень изощрённости.", author: "Леонардо да Винчи" },
-      { text: "Делай, что должен — и будь, что будет.", author: "Марк Аврелий" },
-      { text: "Говори мало, делай много.", author: "Лао-цзы" },
-      { text: "Мы — это то, что мы делаем постоянно.", author: "Аристотель" },
-      { text: "Тишина — тоже текст.", author: "Александр Солженицын" },
-      { text: "Сила в спокойствии.", author: "Конфуций" },
-      { text: "Путь в тысячу ли начинается с одного шага.", author: "Лао-цзы" },
-      { text: "Истинная свобода — в умении отказаться.", author: "Сенека" },
-      { text: "Мы видим мир не таким, каков он есть, а таким, каковы мы.", author: "Иммануил Кант" },
-      { text: "Реальность — это то, что не исчезает, когда ты перестаёшь в неё верить.", author: "Филип К. Дик" }
-    ];
-
-    // Функция для случайного выбора цитаты
-    function getRandomQuote() {
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      const quote = quotes[randomIndex];
-      return `"${quote.text}"<br /><div class="author">— ${quote.author}</div>`;
-    }
-
-    // Устанавливаем случайную цитату на страницу
-    document.getElementById('quote').innerHTML = getRandomQuote();
-  </script>
+  <footer>
+    © 2025 SKVLENT
+  </footer>
 </body>
 </html>
