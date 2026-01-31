@@ -30,11 +30,70 @@ body {
   background: radial-gradient(1200px 600px at 50% -200px, #1a1a1f, var(--bg));
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  background: rgba(11,11,13,0.7);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar .nav-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: var(--text-main);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--text-main);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
 }
 
 /* LAYOUT */
 section {
-  padding: 64px 24px; /* 🔹 оптимизировано */
+  padding: 64px 24px;
 }
 
 .container {
@@ -45,7 +104,7 @@ section {
 
 /* HERO */
 .hero {
-  padding-top: 120px;
+  padding-top: 160px; /* учитываем navbar */
   padding-bottom: 72px;
 }
 
@@ -96,7 +155,7 @@ h2 {
   margin: 0 auto;
 }
 
-/* BUTTONS (Apple-style) */
+/* BUTTONS */
 .buttons {
   display: flex;
   justify-content: center;
@@ -116,10 +175,7 @@ h2 {
   box-shadow:
     0 10px 30px rgba(250,35,59,0.35),
     inset 0 1px 0 rgba(255,255,255,0.25);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    opacity 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn.secondary {
@@ -132,16 +188,8 @@ h2 {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 16px 40px rgba(0,0,0,0.6);
 }
 
-.btn:active {
-  transform: translateY(0);
-  opacity: 0.9;
-}
-
-/* FOOTER */
 footer {
   padding: 56px 24px;
   text-align: center;
@@ -151,8 +199,9 @@ footer {
 
 /* MOBILE */
 @media (max-width: 600px) {
-  section {
-    padding: 56px 20px;
+  .nav-links {
+    gap: 18px;
+    font-size: 0.85rem;
   }
 
   .hero img {
@@ -168,31 +217,41 @@ footer {
 
 <body>
 
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">SKVLENT</div>
+    <div class="nav-links">
+      <a href="#about">Об артисте</a>
+      <a href="#music">Музыка</a>
+      <a href="#social">Соцсети</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </div>
+</nav>
+
 <!-- HERO -->
 <section class="hero">
   <div class="container">
     <h1>SKVLENT</h1>
-    <p>
-      Композитор и продюсер. Музыка на стыке атмосферы,
-      тишины и эмоций.
-    </p>
+    <p>Композитор и продюсер. Музыка на стыке атмосферы, тишины и эмоций.</p>
     <img src="assets/photo.webp" alt="SKVLENT">
   </div>
 </section>
 
 <!-- ABOUT -->
-<section>
+<section id="about">
   <div class="container card">
     <h2>Об артисте</h2>
     <p class="text">
-      Ильяс Скаев, известный как SKVLENT — независимый композитор и продюсер.
-      Его музыка строится на минимализме, пространстве и эмоциональной глубине.
+      Ильяс Скаев, известный как SKVLENT — независимый композитор и продюсер,
+      работающий с минимализмом и эмоциональным звучанием.
     </p>
   </div>
 </section>
 
 <!-- MUSIC -->
-<section>
+<section id="music">
   <div class="container card">
     <h2>Слушать</h2>
     <div class="buttons">
@@ -203,7 +262,7 @@ footer {
 </section>
 
 <!-- SOCIAL -->
-<section>
+<section id="social">
   <div class="container card">
     <h2>Социальные сети</h2>
     <div class="buttons">
@@ -215,7 +274,7 @@ footer {
 </section>
 
 <!-- CONTACT -->
-<section>
+<section id="contact">
   <div class="container card">
     <h2>Контакты</h2>
     <div class="buttons">
