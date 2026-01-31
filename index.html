@@ -13,7 +13,7 @@
   --text-main: #f5f5f7;
   --text-secondary: #9b9ba0;
   --accent: #fa233b;
-  --radius: 28px;
+  --radius: 26px;
 }
 
 /* RESET */
@@ -34,39 +34,40 @@ body {
 
 /* LAYOUT */
 section {
-  padding: 120px 24px;
+  padding: 64px 24px; /* 🔹 оптимизировано */
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 1040px;
   margin: 0 auto;
   text-align: center;
 }
 
 /* HERO */
 .hero {
-  padding-top: 160px;
+  padding-top: 120px;
+  padding-bottom: 72px;
 }
 
 .hero h1 {
-  font-size: clamp(3.2rem, 6vw, 5.2rem);
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 700;
   letter-spacing: -0.035em;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hero p {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   color: var(--text-secondary);
-  max-width: 760px;
-  margin: 0 auto 64px;
+  max-width: 720px;
+  margin: 0 auto 48px;
 }
 
 .hero img {
-  width: 300px;
+  width: 280px;
   border-radius: var(--radius);
   box-shadow:
-    0 50px 120px rgba(0,0,0,0.7),
+    0 40px 100px rgba(0,0,0,0.65),
     0 0 0 1px var(--border);
 }
 
@@ -75,97 +76,91 @@ section {
   background: var(--card);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  padding: 56px 40px;
+  padding: 44px 36px;
   backdrop-filter: blur(18px);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.45);
-  animation: fadeUp 1s ease forwards;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
 }
 
 /* TITLES */
 h2 {
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .text {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
-/* LINKS */
-.links {
+/* BUTTONS (Apple-style) */
+.buttons {
   display: flex;
   justify-content: center;
-  gap: 40px;
   flex-wrap: wrap;
-  margin-top: 36px;
+  gap: 20px;
+  margin-top: 32px;
 }
 
-.links a {
-  font-size: 1.15rem;
+.btn {
+  padding: 14px 28px;
+  font-size: 1.05rem;
   font-weight: 500;
-  color: var(--accent);
+  color: #fff;
+  background: linear-gradient(180deg, #ff4b5f, var(--accent));
+  border-radius: 999px;
   text-decoration: none;
-  position: relative;
+  box-shadow:
+    0 10px 30px rgba(250,35,59,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
 }
 
-.links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
+.btn.secondary {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-main);
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    0 10px 30px rgba(0,0,0,0.4);
 }
 
-.links a:hover::after {
-  transform: scaleX(1);
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.6);
+}
+
+.btn:active {
+  transform: translateY(0);
+  opacity: 0.9;
 }
 
 /* FOOTER */
 footer {
-  padding: 80px 24px;
+  padding: 56px 24px;
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-/* ANIMATION */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* MOBILE */
 @media (max-width: 600px) {
   section {
-    padding: 90px 20px;
-  }
-
-  .hero {
-    padding-top: 120px;
+    padding: 56px 20px;
   }
 
   .hero img {
-    width: 240px;
+    width: 230px;
   }
 
   .card {
-    padding: 44px 24px;
+    padding: 36px 22px;
   }
 }
 </style>
@@ -178,8 +173,8 @@ footer {
   <div class="container">
     <h1>SKVLENT</h1>
     <p>
-      Композитор и продюсер.  
-      Музыка на стыке атмосферы, тишины и эмоций.
+      Композитор и продюсер. Музыка на стыке атмосферы,
+      тишины и эмоций.
     </p>
     <img src="assets/photo.webp" alt="SKVLENT">
   </div>
@@ -191,8 +186,7 @@ footer {
     <h2>Об артисте</h2>
     <p class="text">
       Ильяс Скаев, известный как SKVLENT — независимый композитор и продюсер.
-      Родился в 2001 году в Самаре. Его музыка строится на минимализме,
-      пространстве и эмоциональной глубине.
+      Его музыка строится на минимализме, пространстве и эмоциональной глубине.
     </p>
   </div>
 </section>
@@ -201,9 +195,9 @@ footer {
 <section>
   <div class="container card">
     <h2>Слушать</h2>
-    <div class="links">
-      <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a>
-      <a href="https://music.yandex.ru/artist/22019500" target="_blank">Яндекс Музыка</a>
+    <div class="buttons">
+      <a class="btn" href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a>
+      <a class="btn secondary" href="https://music.yandex.ru/artist/22019500" target="_blank">Яндекс Музыка</a>
     </div>
   </div>
 </section>
@@ -212,10 +206,10 @@ footer {
 <section>
   <div class="container card">
     <h2>Социальные сети</h2>
-    <div class="links">
-      <a href="https://t.me/skvlent" target="_blank">Telegram</a>
-      <a href="https://www.tiktok.com/@skvlent" target="_blank">TikTok</a>
-      <a href="https://www.instagram.com/skvlent" target="_blank">Instagram</a>
+    <div class="buttons">
+      <a class="btn secondary" href="https://t.me/skvlent" target="_blank">Telegram</a>
+      <a class="btn secondary" href="https://www.tiktok.com/@skvlent" target="_blank">TikTok</a>
+      <a class="btn secondary" href="https://www.instagram.com/skvlent" target="_blank">Instagram</a>
     </div>
   </div>
 </section>
@@ -224,9 +218,9 @@ footer {
 <section>
   <div class="container card">
     <h2>Контакты</h2>
-    <div class="links">
-      <a href="https://t.me/skuvlent" target="_blank">Telegram</a>
-      <a href="mailto:skvlent@gmail.com">Email</a>
+    <div class="buttons">
+      <a class="btn" href="https://t.me/skuvlent" target="_blank">Telegram</a>
+      <a class="btn secondary" href="mailto:skvlent@gmail.com">Email</a>
     </div>
   </div>
 </section>
