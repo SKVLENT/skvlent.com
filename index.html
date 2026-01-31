@@ -18,26 +18,22 @@
 }
 
 /* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* BODY */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+               "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: radial-gradient(1200px 600px at 50% -200px, #1a1a1f, var(--bg));
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 }
 
-/* SCROLL CONTAINER */
+/* SCROLL */
 .main {
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
@@ -64,11 +60,15 @@ body {
   justify-content: space-between;
 }
 
+/* LOGO */
 .logo {
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  cursor: pointer;
 }
 
+/* MENU */
 .nav-links {
   display: flex;
   gap: 28px;
@@ -77,15 +77,37 @@ body {
 .nav-links button {
   background: none;
   border: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  font-weight: 500;
   cursor: pointer;
   position: relative;
+  padding: 4px 0;
+  transition: color 0.3s ease;
 }
 
-.nav-links button:hover {
+.nav-links button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: var(--text-main);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.nav-links button:hover,
+.nav-links button.active {
   color: var(--text-main);
+}
+
+.nav-links button.active::after {
+  transform: scaleX(1);
 }
 
 /* SECTIONS */
@@ -98,6 +120,7 @@ section {
   justify-content: center;
 }
 
+/* CONTAINER */
 .container {
   max-width: 1040px;
   padding: 0 24px;
@@ -122,9 +145,7 @@ section {
 .hero img {
   width: 280px;
   border-radius: var(--radius);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,0.65),
-    0 0 0 1px var(--border);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.65);
 }
 
 /* CARD */
@@ -137,10 +158,10 @@ section {
   box-shadow: 0 30px 70px rgba(0,0,0,0.45);
 }
 
+/* TEXT */
 h2 {
   font-size: 2.2rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
 
@@ -155,128 +176,151 @@ h2 {
 .buttons {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 20px;
+  flex-wrap: wrap;
   margin-top: 32px;
 }
 
 .btn {
   padding: 14px 28px;
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: #fff;
-  background: linear-gradient(180deg, #ff4b5f, var(--accent));
   border-radius: 999px;
+  background: linear-gradient(180deg, #ff4b5f, var(--accent));
+  color: #fff;
   text-decoration: none;
-  box-shadow:
-    0 10px 30px rgba(250,35,59,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.25);
+  font-weight: 500;
   transition: transform 0.25s ease;
 }
 
 .btn.secondary {
   background: rgba(255,255,255,0.08);
   color: var(--text-main);
-  box-shadow:
-    inset 0 0 0 1px var(--border),
-    0 10px 30px rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
 }
 
 .btn:hover {
   transform: translateY(-2px);
 }
 
+/* CINEMATIC REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* MOBILE */
 @media (max-width: 600px) {
-  .nav-links {
-    gap: 16px;
-  }
-
-  .hero img {
-    width: 220px;
-  }
+  .nav-links { gap: 16px; }
+  .hero img { width: 220px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav class="navbar">
   <div class="nav-inner">
-    <div class="logo">SKVLENT</div>
+    <div class="logo" data-target="hero">SKVLENT</div>
     <div class="nav-links">
-      <button data-target="hero">Главная</button>
-      <button data-target="about">Об артисте</button>
-      <button data-target="music">Музыка</button>
-      <button data-target="social">Соцсети</button>
-      <button data-target="contact">Контакты</button>
+      <button data-target="hero" class="active">Home</button>
+      <button data-target="about">About</button>
+      <button data-target="music">Music</button>
+      <button data-target="social">Social</button>
+      <button data-target="contact">Contact</button>
     </div>
   </div>
 </nav>
 
 <div class="main" id="scroll">
 
-  <section id="hero">
-    <div class="container hero">
-      <h1>SKVLENT</h1>
-      <p>Композитор и продюсер. Музыка на стыке атмосферы и эмоций.</p>
-      <img src="assets/photo.webp" alt="SKVLENT">
-    </div>
-  </section>
+<section id="hero">
+  <div class="container hero reveal">
+    <h1>SKVLENT</h1>
+    <p>Композитор и продюсер. Музыка на стыке атмосферы и эмоций.</p>
+    <img src="assets/photo.webp" alt="SKVLENT">
+  </div>
+</section>
 
-  <section id="about">
-    <div class="container card">
-      <h2>Об артисте</h2>
-      <p class="text">
-        Ильяс Скаев — независимый композитор и продюсер.
-        Минимализм, пространство и эмоциональная глубина.
-      </p>
-    </div>
-  </section>
+<section id="about">
+  <div class="container card reveal">
+    <h2>Об артисте</h2>
+    <p class="text">Независимый композитор и продюсер. Минимализм, пространство, эмоции.</p>
+  </div>
+</section>
 
-  <section id="music">
-    <div class="container card">
-      <h2>Слушать</h2>
-      <div class="buttons">
-        <a class="btn" href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a>
-        <a class="btn secondary" href="https://music.yandex.ru/artist/22019500" target="_blank">Яндекс Музыка</a>
-      </div>
+<section id="music">
+  <div class="container card reveal">
+    <h2>Слушать</h2>
+    <div class="buttons">
+      <a class="btn" href="#">Spotify</a>
+      <a class="btn secondary" href="#">Яндекс Музыка</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="social">
-    <div class="container card">
-      <h2>Социальные сети</h2>
-      <div class="buttons">
-        <a class="btn secondary" href="https://t.me/skvlent" target="_blank">Telegram</a>
-        <a class="btn secondary" href="https://www.tiktok.com/@skvlent" target="_blank">TikTok</a>
-        <a class="btn secondary" href="https://www.instagram.com/skvlent" target="_blank">Instagram</a>
-      </div>
+<section id="social">
+  <div class="container card reveal">
+    <h2>Соцсети</h2>
+    <div class="buttons">
+      <a class="btn secondary" href="#">Telegram</a>
+      <a class="btn secondary" href="#">Instagram</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="contact">
-    <div class="container card">
-      <h2>Контакты</h2>
-      <div class="buttons">
-        <a class="btn" href="https://t.me/skuvlent" target="_blank">Telegram</a>
-        <a class="btn secondary" href="mailto:skvlent@gmail.com">Email</a>
-      </div>
+<section id="contact">
+  <div class="container card reveal">
+    <h2>Контакты</h2>
+    <div class="buttons">
+      <a class="btn" href="#">Telegram</a>
+      <a class="btn secondary" href="#">Email</a>
     </div>
-  </section>
+  </div>
+</section>
 
 </div>
 
 <script>
-document.querySelectorAll('.nav-links button').forEach(btn => {
+const buttons = document.querySelectorAll('[data-target]');
+const sections = document.querySelectorAll('section');
+
+/* NAV CLICK */
+buttons.forEach(btn => {
   btn.addEventListener('click', () => {
-    const id = btn.dataset.target;
-    document.getElementById(id).scrollIntoView({
-      behavior: 'smooth'
-    });
+    document.getElementById(btn.dataset.target)
+      .scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+/* ACTIVE MENU */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-links button')
+        .forEach(b => b.classList.remove('active'));
+      document.querySelector(`.nav-links button[data-target="${entry.target.id}"]`)
+        ?.classList.add('active');
+    }
+  });
+}, { threshold: 0.6 });
+
+sections.forEach(section => observer.observe(section));
+
+/* REVEAL */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting)
+      entry.target.classList.add('visible');
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.reveal')
+  .forEach(el => revealObserver.observe(el));
 </script>
 
 </body>
