@@ -6,15 +6,30 @@
 <title>SKVLENT — Official Artist</title>
 
 <style>
+/* =======================
+   COLOR SCHEME (AUTO)
+======================= */
 :root {
-  --bg: #0b0b0d;
-  --card: rgba(255,255,255,0.06);
-  --border: rgba(255,255,255,0.08);
-  --text-main: #f5f5f7;
-  --text-secondary: #9b9ba0;
+  --bg: #f5f5f7;
+  --bg-alt: #ffffff;
+  --card: rgba(255,255,255,0.8);
+  --border: rgba(0,0,0,0.08);
+  --text-main: #1d1d1f;
+  --text-secondary: #6e6e73;
   --accent: #fa233b;
   --radius: 26px;
   --nav-height: 64px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0d;
+    --bg-alt: #111114;
+    --card: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.08);
+    --text-main: #f5f5f7;
+    --text-secondary: #9b9ba0;
+  }
 }
 
 /* RESET */
@@ -22,12 +37,24 @@
 
 /* BODY */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-               "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 50% -200px, #1a1a1f, var(--bg));
+  font-family: -apple-system, BlinkMacSystemFont,
+               "SF Pro Display", "SF Pro Text",
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
   color: var(--text-main);
-  -webkit-font-smoothing: antialiased;
   overflow: hidden;
+}
+
+/* PARALLAX BACKGROUND */
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(800px 400px at 50% -200px, rgba(255,255,255,0.15), transparent),
+    linear-gradient(var(--bg), var(--bg));
+  z-index: -1;
+  transform: translateY(0);
+  transition: transform 0.1s linear;
 }
 
 /* SCROLL */
@@ -44,27 +71,28 @@ body {
   top: 0;
   width: 100%;
   height: var(--nav-height);
-  z-index: 100;
-  backdrop-filter: blur(16px);
-  background: rgba(11,11,13,0.75);
+  backdrop-filter: blur(18px);
+  background: rgba(255,255,255,0.6);
   border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+@media (prefers-color-scheme: dark) {
+  .navbar { background: rgba(11,11,13,0.75); }
 }
 
 .nav-inner {
   max-width: 1040px;
   height: 100%;
-  margin: 0 auto;
+  margin: auto;
   padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* LOGO */
 .logo {
   font-weight: 600;
   letter-spacing: 0.08em;
-  font-size: 0.95rem;
   cursor: pointer;
 }
 
@@ -78,36 +106,16 @@ body {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-secondary);
   cursor: pointer;
   position: relative;
-  padding: 4px 0;
-  transition: color 0.3s ease;
 }
 
-.nav-links button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 2px;
-  background: var(--text-main);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
-}
-
-.nav-links button:hover,
 .nav-links button.active {
   color: var(--text-main);
-}
-
-.nav-links button.active::after {
-  transform: scaleX(1);
 }
 
 /* SECTIONS */
@@ -132,20 +140,17 @@ section {
   font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 700;
   letter-spacing: -0.035em;
-  margin-bottom: 16px;
 }
-
 .hero p {
   font-size: 1.25rem;
   color: var(--text-secondary);
+  margin: 24px auto 48px;
   max-width: 720px;
-  margin: 0 auto 48px;
 }
-
 .hero img {
-  width: 280px;
+  width: 260px;
   border-radius: var(--radius);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.65);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.3);
 }
 
 /* CARD */
@@ -155,73 +160,53 @@ section {
   border: 1px solid var(--border);
   padding: 44px 36px;
   backdrop-filter: blur(18px);
-  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
 }
 
-/* TEXT */
-h2 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.text {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-/* BUTTONS */
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+/* RELEASES */
+.releases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 24px;
   margin-top: 32px;
 }
 
-.btn {
-  padding: 14px 28px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #ff4b5f, var(--accent));
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: transform 0.25s ease;
+.release {
+  background: var(--bg-alt);
+  border-radius: 20px;
+  padding: 16px;
+  transition: transform .3s ease;
 }
 
-.btn.secondary {
-  background: rgba(255,255,255,0.08);
-  color: var(--text-main);
-  border: 1px solid var(--border);
+.release:hover {
+  transform: translateY(-6px);
 }
 
-.btn:hover {
-  transform: translateY(-2px);
+.release img {
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 12px;
 }
 
-/* CINEMATIC REVEAL */
+.release span {
+  font-size: 0.9rem;
+}
+
+/* REVEAL */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: all 1s ease;
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .nav-links { gap: 16px; }
-  .hero img { width: 220px; }
 }
 </style>
 </head>
 
 <body>
+
+<div class="background" id="bg"></div>
 
 <nav class="navbar">
   <div class="nav-inner">
@@ -230,45 +215,43 @@ h2 {
       <button data-target="hero" class="active">Home</button>
       <button data-target="about">About</button>
       <button data-target="music">Music</button>
-      <button data-target="social">Social</button>
+      <button data-target="releases">Releases</button>
       <button data-target="contact">Contact</button>
     </div>
   </div>
 </nav>
 
-<div class="main" id="scroll">
+<div class="main">
 
 <section id="hero">
   <div class="container hero reveal">
     <h1>SKVLENT</h1>
-    <p>Композитор и продюсер. Музыка на стыке атмосферы и эмоций.</p>
-    <img src="assets/photo.webp" alt="SKVLENT">
+    <p>Atmospheric & minimal music</p>
+    <img src="assets/photo.webp">
   </div>
 </section>
 
 <section id="about">
   <div class="container card reveal">
     <h2>Об артисте</h2>
-    <p class="text">Независимый композитор и продюсер. Минимализм, пространство, эмоции.</p>
+    <p>Минимализм. Пространство. Эмоции.</p>
   </div>
 </section>
 
 <section id="music">
   <div class="container card reveal">
     <h2>Слушать</h2>
-    <div class="buttons">
-      <a class="btn" href="#">Spotify</a>
-      <a class="btn secondary" href="#">Яндекс Музыка</a>
-    </div>
+    <p>Spotify / Яндекс Музыка</p>
   </div>
 </section>
 
-<section id="social">
+<section id="releases">
   <div class="container card reveal">
-    <h2>Соцсети</h2>
-    <div class="buttons">
-      <a class="btn secondary" href="#">Telegram</a>
-      <a class="btn secondary" href="#">Instagram</a>
+    <h2>Релизы</h2>
+    <div class="releases">
+      <div class="release"><img src="assets/release1.jpg"><span>Release One</span></div>
+      <div class="release"><img src="assets/release2.jpg"><span>Release Two</span></div>
+      <div class="release"><img src="assets/release3.jpg"><span>Release Three</span></div>
     </div>
   </div>
 </section>
@@ -276,51 +259,37 @@ h2 {
 <section id="contact">
   <div class="container card reveal">
     <h2>Контакты</h2>
-    <div class="buttons">
-      <a class="btn" href="#">Telegram</a>
-      <a class="btn secondary" href="#">Email</a>
-    </div>
+    <p>Telegram / Email</p>
   </div>
 </section>
 
 </div>
 
 <script>
-const buttons = document.querySelectorAll('[data-target]');
-const sections = document.querySelectorAll('section');
-
-/* NAV CLICK */
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById(btn.dataset.target)
-      .scrollIntoView({ behavior: 'smooth' });
-  });
+/* PARALLAX */
+const bg = document.getElementById('bg');
+document.querySelector('.main').addEventListener('scroll', e => {
+  bg.style.transform = `translateY(${e.target.scrollTop * 0.15}px)`;
 });
 
-/* ACTIVE MENU */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
+/* NAV SCROLL */
+document.querySelectorAll('[data-target]').forEach(el=>{
+  el.onclick=()=>document.getElementById(el.dataset.target)
+    .scrollIntoView({behavior:'smooth'});
+});
+
+/* ACTIVE + REVEAL */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
       document.querySelectorAll('.nav-links button')
-        .forEach(b => b.classList.remove('active'));
-      document.querySelector(`.nav-links button[data-target="${entry.target.id}"]`)
-        ?.classList.add('active');
+        .forEach(b=>b.classList.toggle('active',b.dataset.target===e.target.id));
+      e.target.querySelector('.reveal')?.classList.add('visible');
     }
   });
-}, { threshold: 0.6 });
+},{threshold:.6});
 
-sections.forEach(section => observer.observe(section));
-
-/* REVEAL */
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting)
-      entry.target.classList.add('visible');
-  });
-}, { threshold: 0.3 });
-
-document.querySelectorAll('.reveal')
-  .forEach(el => revealObserver.observe(el));
+document.querySelectorAll('section').forEach(s=>observer.observe(s));
 </script>
 
 </body>
