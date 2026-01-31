@@ -14,6 +14,7 @@
   --text-secondary: #9b9ba0;
   --accent: #fa233b;
   --radius: 26px;
+  --nav-height: 64px;
 }
 
 /* RESET */
@@ -30,6 +31,14 @@ body {
   background: radial-gradient(1200px 600px at 50% -200px, #1a1a1f, var(--bg));
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* SCROLL CONTAINER */
+.main {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
@@ -38,16 +47,18 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
+  height: var(--nav-height);
   z-index: 100;
   backdrop-filter: blur(16px);
-  background: rgba(11,11,13,0.7);
+  background: rgba(11,11,13,0.75);
   border-bottom: 1px solid var(--border);
 }
 
-.navbar .nav-container {
+.nav-inner {
   max-width: 1040px;
+  height: 100%;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -63,51 +74,37 @@ body {
   gap: 28px;
 }
 
-.nav-links a {
+.nav-links button {
+  background: none;
+  border: none;
   color: var(--text-secondary);
-  text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
+  cursor: pointer;
   position: relative;
 }
 
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 2px;
-  background: var(--text-main);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.nav-links a:hover {
+.nav-links button:hover {
   color: var(--text-main);
 }
 
-.nav-links a:hover::after {
-  transform: scaleX(1);
-}
-
-/* LAYOUT */
+/* SECTIONS */
 section {
-  padding: 64px 24px;
+  height: 100vh;
+  padding-top: var(--nav-height);
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
   max-width: 1040px;
-  margin: 0 auto;
+  padding: 0 24px;
   text-align: center;
 }
 
 /* HERO */
-.hero {
-  padding-top: 160px; /* учитываем navbar */
-  padding-bottom: 72px;
-}
-
 .hero h1 {
   font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 700;
@@ -130,7 +127,7 @@ section {
     0 0 0 1px var(--border);
 }
 
-/* CARDS */
+/* CARD */
 .card {
   background: var(--card);
   border-radius: var(--radius);
@@ -140,7 +137,6 @@ section {
   box-shadow: 0 30px 70px rgba(0,0,0,0.45);
 }
 
-/* TITLES */
 h2 {
   font-size: 2.2rem;
   font-weight: 600;
@@ -175,7 +171,7 @@ h2 {
   box-shadow:
     0 10px 30px rgba(250,35,59,0.35),
     inset 0 1px 0 rgba(255,255,255,0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 .btn.secondary {
@@ -190,26 +186,14 @@ h2 {
   transform: translateY(-2px);
 }
 
-footer {
-  padding: 56px 24px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
 /* MOBILE */
 @media (max-width: 600px) {
   .nav-links {
-    gap: 18px;
-    font-size: 0.85rem;
+    gap: 16px;
   }
 
   .hero img {
-    width: 230px;
-  }
-
-  .card {
-    padding: 36px 22px;
+    width: 220px;
   }
 }
 </style>
@@ -217,76 +201,83 @@ footer {
 
 <body>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav class="navbar">
-  <div class="nav-container">
+  <div class="nav-inner">
     <div class="logo">SKVLENT</div>
     <div class="nav-links">
-      <a href="#about">Об артисте</a>
-      <a href="#music">Музыка</a>
-      <a href="#social">Соцсети</a>
-      <a href="#contact">Контакты</a>
+      <button data-target="hero">Главная</button>
+      <button data-target="about">Об артисте</button>
+      <button data-target="music">Музыка</button>
+      <button data-target="social">Соцсети</button>
+      <button data-target="contact">Контакты</button>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <h1>SKVLENT</h1>
-    <p>Композитор и продюсер. Музыка на стыке атмосферы, тишины и эмоций.</p>
-    <img src="assets/photo.webp" alt="SKVLENT">
-  </div>
-</section>
+<div class="main" id="scroll">
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container card">
-    <h2>Об артисте</h2>
-    <p class="text">
-      Ильяс Скаев, известный как SKVLENT — независимый композитор и продюсер,
-      работающий с минимализмом и эмоциональным звучанием.
-    </p>
-  </div>
-</section>
-
-<!-- MUSIC -->
-<section id="music">
-  <div class="container card">
-    <h2>Слушать</h2>
-    <div class="buttons">
-      <a class="btn" href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a>
-      <a class="btn secondary" href="https://music.yandex.ru/artist/22019500" target="_blank">Яндекс Музыка</a>
+  <section id="hero">
+    <div class="container hero">
+      <h1>SKVLENT</h1>
+      <p>Композитор и продюсер. Музыка на стыке атмосферы и эмоций.</p>
+      <img src="assets/photo.webp" alt="SKVLENT">
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SOCIAL -->
-<section id="social">
-  <div class="container card">
-    <h2>Социальные сети</h2>
-    <div class="buttons">
-      <a class="btn secondary" href="https://t.me/skvlent" target="_blank">Telegram</a>
-      <a class="btn secondary" href="https://www.tiktok.com/@skvlent" target="_blank">TikTok</a>
-      <a class="btn secondary" href="https://www.instagram.com/skvlent" target="_blank">Instagram</a>
+  <section id="about">
+    <div class="container card">
+      <h2>Об артисте</h2>
+      <p class="text">
+        Ильяс Скаев — независимый композитор и продюсер.
+        Минимализм, пространство и эмоциональная глубина.
+      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container card">
-    <h2>Контакты</h2>
-    <div class="buttons">
-      <a class="btn" href="https://t.me/skuvlent" target="_blank">Telegram</a>
-      <a class="btn secondary" href="mailto:skvlent@gmail.com">Email</a>
+  <section id="music">
+    <div class="container card">
+      <h2>Слушать</h2>
+      <div class="buttons">
+        <a class="btn" href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a>
+        <a class="btn secondary" href="https://music.yandex.ru/artist/22019500" target="_blank">Яндекс Музыка</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  © 2026 SKVLENT
-</footer>
+  <section id="social">
+    <div class="container card">
+      <h2>Социальные сети</h2>
+      <div class="buttons">
+        <a class="btn secondary" href="https://t.me/skvlent" target="_blank">Telegram</a>
+        <a class="btn secondary" href="https://www.tiktok.com/@skvlent" target="_blank">TikTok</a>
+        <a class="btn secondary" href="https://www.instagram.com/skvlent" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container card">
+      <h2>Контакты</h2>
+      <div class="buttons">
+        <a class="btn" href="https://t.me/skuvlent" target="_blank">Telegram</a>
+        <a class="btn secondary" href="mailto:skvlent@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+document.querySelectorAll('.nav-links button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.target;
+    document.getElementById(id).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
 
 </body>
 </html>
