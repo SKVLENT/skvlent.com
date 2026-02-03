@@ -44,7 +44,7 @@ body {
   justify-content: center;
 }
 
-/* терминал как окно */
+/* terminal window */
 .terminal {
   position: relative;
   width: 92%;
@@ -89,7 +89,7 @@ body {
   margin-bottom: 16px;
 }
 
-/* 🔥 СКРЫВАЕМ NEOFETCH НА МОБИЛЕ */
+/* hide neofetch on mobile */
 @media (max-width: 768px) {
   .neofetch {
     display: none;
@@ -104,17 +104,21 @@ body {
 /* ASCII logo */
 .logo {
   white-space: pre;
-  font-size: 5px;
+  font-size: 7px;
   line-height: 1;
   color: var(--green);
 }
 
 /* info */
-.info .user { color: var(--green); }
+.info .user {
+  color: var(--green);
+  margin-bottom: 4px;
+}
+
 .info .label {
   color: var(--blue);
   display: inline-block;
-  width: 80px;
+  width: 90px;
 }
 
 /* prompt */
@@ -137,7 +141,11 @@ body {
 }
 
 /* footer */
-.footer { margin-top: 14px; font-size: 12px; color: var(--dim); }
+.footer {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--dim);
+}
 </style>
 </head>
 
@@ -148,7 +156,7 @@ body {
 
 <div id="content">
 
-  <!-- NEOFETCH (ТОЛЬКО DESKTOP) -->
+  <!-- NEOFETCH (DESKTOP ONLY) -->
   <div class="neofetch">
     <div class="logo-wrap" id="logoWrap">
 <pre class="logo" id="logo">
@@ -213,12 +221,14 @@ body {
     <div class="info">
       <div class="user">skvlent@web</div>
       <div>-------------</div>
-      <div><span class="label">OS:</span> SKVLENT Web</div>
-      <div><span class="label">Shell:</span> websh</div>
-      <div><span class="label">Uptime:</span> <span id="uptime"></span></div>
+      <div><span class="label">Name:</span> Ilyas</div>
+      <div><span class="label">Age:</span> <span id="age"></span></div>
+      <div><span class="label">Height:</span> 185 cm</div>
+      <div><span class="label">Weight:</span> 75 kg</div>
     </div>
   </div>
 
+  <!-- LS -->
   <div class="prompt">
     <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
     <span class="cmd">ls</span>
@@ -246,9 +256,11 @@ const bootLines = [
   "[ OK ] syncing signal",
   "[ OK ] encrypting channel"
 ];
+
 const boot = document.getElementById("boot");
 const content = document.getElementById("content");
 let i = 0;
+
 (function typeBoot(){
   if (i < bootLines.length) {
     const line = document.createElement("div");
@@ -271,14 +283,7 @@ let i = 0;
   }
 })();
 
-/* uptime */
-const start = Date.now();
-setInterval(() => {
-  document.getElementById("uptime").textContent =
-    Math.floor((Date.now() - start) / 1000) + "s";
-}, 1000);
-
-/* auto-scale ASCII (desktop only по факту) */
+/* AUTO SCALE ASCII */
 function scaleLogo() {
   const wrap = document.getElementById("logoWrap");
   const logo = document.getElementById("logo");
@@ -290,6 +295,37 @@ function scaleLogo() {
   wrap.style.transform = `scale(${scale})`;
 }
 window.addEventListener("resize", scaleLogo);
+
+/* AGE CALCULATION */
+const birthDate = new Date(2001, 1, 9, 0, 0, 0); // 09.02.2001 00:00
+
+function updateAge() {
+  const now = new Date();
+  let years = now.getFullYear() - birthDate.getFullYear();
+  let months = now.getMonth() - birthDate.getMonth();
+  let days = now.getDate() - birthDate.getDate();
+  let hours = now.getHours() - birthDate.getHours();
+
+  if (hours < 0) {
+    hours += 24;
+    days--;
+  }
+  if (days < 0) {
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    days += prevMonth;
+    months--;
+  }
+  if (months < 0) {
+    months += 12;
+    years--;
+  }
+
+  document.getElementById("age").textContent =
+    `${years}y ${months}m ${days}d ${hours}h`;
+}
+
+updateAge();
+setInterval(updateAge, 1000);
 </script>
 
 </body>
