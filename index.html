@@ -23,7 +23,6 @@ html, body {
   height: 100%;
   background: var(--bg);
   color: var(--fg);
-
   font-family:
     "SF Mono",
     "JetBrains Mono",
@@ -33,10 +32,8 @@ html, body {
     Monaco,
     Consolas,
     monospace;
-
   font-weight: 500;
   letter-spacing: 0.02em;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -94,11 +91,11 @@ body {
   margin-bottom: 18px;
 }
 
-/* ASCII LOGO — НЕ ТРОГАТЬ */
+/* ASCII LOGO — ТОЛЬКО РАЗМЕР */
 .logo {
   white-space: pre;
-  font-size: 11px;
-  line-height: 1.05;
+  font-size: 7px;
+  line-height: 1;
   color: var(--green);
 }
 
@@ -118,7 +115,6 @@ body {
 .prompt {
   margin: 10px 0 6px;
 }
-
 .prompt .user { color: var(--green); }
 .prompt .path { color: var(--blue); }
 .prompt .cmd  { color: var(--yellow); }
@@ -129,16 +125,11 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
-
 .ls a {
   color: var(--cyan);
   text-decoration: none;
 }
-
-.ls a.dir {
-  color: var(--blue);
-}
-
+.ls a.dir { color: var(--blue); }
 .ls a:hover {
   color: #ffffff;
   text-shadow: 0 0 6px rgba(102,217,239,.8);
@@ -160,7 +151,6 @@ body {
 
 <div id="content">
 
-  <!-- NEOFETCH -->
   <div class="neofetch">
 <pre class="logo">
  ..................-:   .====*+=:-*=   ..:------=+-=-----=-+==:-.==-:..:-:. ....................... 
@@ -285,7 +275,7 @@ let i = 0;
 const start = Date.now();
 setInterval(() => {
   document.getElementById("uptime").textContent =
-    Math.floor((Date.now() - start)) + "s";
+    Math.floor((Date.now() - start) / 1000) + "s";
 }, 1000);
 </script>
 
