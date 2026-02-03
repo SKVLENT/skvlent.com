@@ -8,6 +8,7 @@
 <style>
 :root {
   --bg: #272822;
+  --panel: #1e1f1c;
   --fg: #f8f8f2;
   --green: #a6e22e;
   --yellow: #e6db74;
@@ -23,7 +24,6 @@ html, body {
   background: var(--bg);
   color: var(--fg);
 
-  /* 🔥 КЛЮЧЕВОЕ МЕСТО */
   font-family:
     "SF Mono",
     "JetBrains Mono",
@@ -37,7 +37,6 @@ html, body {
   font-weight: 500;
   letter-spacing: 0.02em;
 
-  /* сглаживание как в macOS / Linux */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -52,14 +51,14 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 900px;
+  max-width: 960px;
   padding: 22px;
+  background: var(--panel);
   border-radius: 6px;
-  background: #1e1f1c;
   box-shadow: 0 0 30px rgba(0,0,0,.6);
 }
 
-/* scanlines (очень мягко) */
+/* scanlines (subtle) */
 .terminal::before {
   content: "";
   position: absolute;
@@ -86,31 +85,53 @@ body {
   display: none;
 }
 
-/* ascii */
-.ascii {
+/* neofetch */
+.neofetch {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 28px;
+  margin-bottom: 14px;
+}
+
+.logo {
   white-space: pre;
-  font-size: 12px;
-  line-height: 1.15;
-  margin-bottom: 10px;
+  color: var(--green);
+}
+
+.info div {
+  line-height: 1.45;
+}
+
+.info .user {
+  color: var(--green);
+}
+
+.info .label {
+  color: var(--blue);
+  min-width: 80px;
+  display: inline-block;
+}
+
+.info .value {
+  color: var(--fg);
 }
 
 /* prompt */
 .prompt {
-  margin-bottom: 6px;
+  margin: 10px 0 6px;
 }
 
 .prompt .user { color: var(--green); }
 .prompt .path { color: var(--blue); }
 .prompt .cmd  { color: var(--yellow); }
 
-/* ls output (Linux-like columns) */
+/* ls output */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
 
-/* items */
 .ls a {
   color: var(--cyan);
   text-decoration: none;
@@ -121,7 +142,7 @@ body {
 }
 
 .ls a:hover {
-  color: #ffffff;
+  color: #fff;
   text-shadow: 0 0 6px rgba(102,217,239,.8);
 }
 
@@ -130,11 +151,6 @@ body {
   margin-top: 14px;
   font-size: 12px;
   color: var(--dim);
-}
-
-.status {
-  font-size: 11px;
-  margin-top: 4px;
 }
 </style>
 </head>
@@ -146,34 +162,48 @@ body {
 
 <div id="content">
 
-<div class="ascii">
-███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
-██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
-███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
-╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
-███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
-╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
-</div>
+  <!-- NEOFETCH -->
+  <div class="neofetch">
+    <div class="logo">
+   ██████╗
+  ██╔════╝
+  ██║  ███╗
+  ██║   ██║
+  ╚██████╔╝
+   ╚═════╝
+    </div>
 
-<div class="prompt">
-  <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
-  <span class="cmd">ls</span>
-</div>
+    <div class="info">
+      <div class="user">skvlent@web</div>
+      <div>-------------</div>
+      <div><span class="label">OS:</span> <span class="value">SKVLENT Web</span></div>
+      <div><span class="label">Host:</span> <span class="value">skvlent.com</span></div>
+      <div><span class="label">Shell:</span> <span class="value">websh</span></div>
+      <div><span class="label">Uptime:</span> <span class="value" id="uptime"></span></div>
+      <div><span class="label">Links:</span> <span class="value">spotify instagram telegram</span></div>
+      <div><span class="label">Donate:</span> <span class="value">ru crypto</span></div>
+    </div>
+  </div>
 
-<div class="ls">
-  <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
-  <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
-  <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
-  <a href="https://t.me/skvlent" target="_blank">telegram</a>
-  <a href="mailto:skvlent@gmail.com">contact_email</a>
-  <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
-  <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
-</div>
+  <!-- LS -->
+  <div class="prompt">
+    <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
+    <span class="cmd">ls</span>
+  </div>
 
-<div class="footer">
-  connection stable.
-  <div class="status" id="status"></div>
-</div>
+  <div class="ls">
+    <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
+    <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
+    <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
+    <a href="https://t.me/skvlent" target="_blank">telegram</a>
+    <a href="mailto:skvlent@gmail.com">contact_email</a>
+    <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
+    <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
+  </div>
+
+  <div class="footer">
+    connection stable.
+  </div>
 
 </div>
 </div>
@@ -214,13 +244,11 @@ function typeBoot() {
 
 typeBoot();
 
-/* uptime + time */
+/* uptime */
 const start = Date.now();
 setInterval(() => {
-  const now = new Date();
   const uptime = Math.floor((Date.now() - start) / 1000);
-  document.getElementById("status").textContent =
-    `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()}`;
+  document.getElementById("uptime").textContent = uptime + "s";
 }, 1000);
 </script>
 
