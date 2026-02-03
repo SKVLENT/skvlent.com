@@ -27,12 +27,16 @@ html, body {
   font-family:
     "SF Mono",
     "JetBrains Mono",
+    "DejaVu Sans Mono",
+    "Ubuntu Mono",
     Menlo,
     Monaco,
     Consolas,
     monospace;
   font-weight: 500;
   letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -41,23 +45,24 @@ body {
   justify-content: center;
 }
 
-/* TERMINAL */
+/* ===== TERMINAL WINDOW ===== */
 .terminal {
-  width: 900px;
-  height: 520px;
+  width: 92%;
+  max-width: 980px;
   background: var(--panel);
   border-radius: 8px;
   box-shadow: 0 20px 40px rgba(0,0,0,.65);
   overflow: hidden;
 }
 
-/* TITLE BAR */
+/* ===== TITLE BAR ===== */
 .titlebar {
   height: 34px;
   background: linear-gradient(to bottom, #32332d, var(--panel-top));
   display: flex;
   align-items: center;
   padding: 0 12px;
+  user-select: none;
 }
 
 .window-controls {
@@ -70,23 +75,26 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  opacity: 0.85;
 }
 
 .ctrl.close { background: #ff5f56; }
-.ctrl.min { background: #ffbd2e; }
-.ctrl.max { background: #27c93f; }
+.ctrl.min   { background: #ffbd2e; }
+.ctrl.max   { background: #27c93f; }
 
 .window-title {
-  font-size: 12px;
   color: #d0d0d0;
+  font-size: 12px;
 }
 
-/* BODY */
+/* ===== TERMINAL BODY ===== */
 .terminal-body {
-  padding: 22px;
   position: relative;
+  padding: 22px;
+  min-height: 520px; /* фиксированный размер с самого начала */
 }
 
+/* scanlines */
 .terminal-body::before {
   content: "";
   position: absolute;
@@ -101,7 +109,7 @@ body {
   );
 }
 
-/* PROMPT */
+/* prompt */
 .prompt-line {
   white-space: pre;
 }
@@ -110,17 +118,25 @@ body {
 .path { color: var(--blue); }
 .cmd  { color: var(--yellow); }
 
-/* CONTENT */
-#content { display: none; }
-
-/* NEOFETCH */
+/* neofetch layout */
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 28px;
-  margin-bottom: 14px;
+  margin: 12px 0 16px;
 }
 
+/* hide neofetch on mobile */
+@media (max-width: 768px) {
+  .neofetch {
+    display: none;
+  }
+}
+
+/* autoscale wrapper */
+.logo-wrap { transform-origin: top left; }
+
+/* ASCII logo */
 .logo {
   white-space: pre;
   font-size: 7px;
@@ -128,26 +144,27 @@ body {
   color: var(--green);
 }
 
+/* info */
+.info .user { margin-bottom: 4px; }
 .info .label {
+  color: var(--blue);
   display: inline-block;
   width: 90px;
-  color: var(--blue);
 }
 
-/* LS */
+/* ls */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
-.ls a {
-  color: var(--cyan);
-  text-decoration: none;
-}
+.ls a { color: var(--cyan); text-decoration: none; }
 .ls a.dir { color: var(--blue); }
+.ls a:hover { color: #fff; }
 
+/* footer */
 .footer {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: 12px;
   color: var(--dim);
 }
@@ -167,11 +184,18 @@ body {
   </div>
 
   <div class="terminal-body">
-    <div id="boot" class="prompt-line"></div>
 
-    <div id="content">
+    <!-- SHELL START -->
+    <div class="prompt-line" id="bootLine">
+      <span class="user">skvlent@web</span>:<span class="path">~</span>$ <span id="typedCmd"></span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="content" style="display:none">
+
       <div class="neofetch">
-<pre class="logo">
+        <div class="logo-wrap" id="logoWrap">
+<pre class="logo" id="logo">
                             .... ..       .......-.:.....:.-::......                                
                          ....  ..    .........-:::::.......=@@@@#+@#=:                              
                       .:-..  .    ...   .......... .#@@@%=:.  :::*.:.:=:                            
@@ -226,65 +250,73 @@ body {
 *%%%%%%%@@%%@@%#@@@@%@%%%%%%@@@%%%%%%%%#%%%%@@%%%%%%%%%%%#%%@%@@%%%#%%@%%%%@%%%%%%#%@%%%%%%%%@%%%%@+
 *%@@@%%@%@%%@%@@@%%%%@@@@@@%%%%%%@@@%%%@@%%%%%@@@%%%%%%%@@@%%@%%%@@@@%@%@@%%@%%%%%%%%@@%%%@@%%%@%@@+
 =**+***+++**+++*+++***++*++++++=+++++*++++**+***++*****+*++**++++++++++*+++++++++*++*++++*+++++++++:
-
 </pre>
+        </div>
+
         <div class="info">
           <div class="user">skvlent@web</div>
           <div>-------------</div>
           <div><span class="label">Name:</span> Ilyas</div>
           <div><span class="label">Age:</span> <span id="age"></span></div>
+          <div><span class="label">Height:</span> 185 cm</div>
+          <div><span class="label">Weight:</span> 75 kg</div>
           <div><span class="label">Timezone:</span> Europe/Samara</div>
         </div>
       </div>
 
       <div class="prompt-line">
-<span class="user">skvlent@web</span>:<span class="path">~</span>$ <span class="cmd">ls</span>
+        <span class="user">skvlent@web</span>:<span class="path">~</span>$ <span class="cmd">ls</span>
       </div>
 
       <div class="ls">
-        <a href="https://open.spotify.com" target="_blank">spotify</a>
-        <a href="https://instagram.com/skvlent" target="_blank">instagram</a>
+        <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
+        <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
+        <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
         <a href="https://t.me/skvlent" target="_blank">telegram</a>
         <a href="mailto:skvlent@gmail.com">contact_email</a>
-        <a href="#" class="dir">donate/</a>
+        <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
+        <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
       </div>
 
       <div class="footer">connection stable.</div>
     </div>
+
   </div>
 </div>
 
 <script>
-const boot = document.getElementById("boot");
+/* type skvlent.sh */
+const cmd = "skvlent.sh";
+let i = 0;
+const out = document.getElementById("typedCmd");
 const content = document.getElementById("content");
 
-const prompt = "skvlent@web:~$ ";
-const command = "skvlent.sh";
-
-function sleep(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
-
-async function type(text, delay = 40) {
-  for (const c of text) {
-    boot.textContent += c;
-    await sleep(delay);
+const type = setInterval(() => {
+  out.textContent += cmd[i++];
+  if (i === cmd.length) {
+    clearInterval(type);
+    setTimeout(() => {
+      content.style.display = "block";
+      scaleLogo();
+    }, 400);
   }
-}
+}, 90);
 
-(async function run() {
-  await type(prompt, 30);
-  await sleep(300);
-  await type(command, 60);
-  await sleep(400);
-  boot.textContent += "\n";
-  await sleep(300);
-  content.style.display = "block";
-})();
+/* autoscale ASCII */
+function scaleLogo() {
+  const wrap = document.getElementById("logoWrap");
+  const logo = document.getElementById("logo");
+  if (!wrap || !logo) return;
+  const maxWidth = wrap.parentElement.offsetWidth;
+  const realWidth = logo.scrollWidth;
+  wrap.style.transform =
+    realWidth > maxWidth ? `scale(${maxWidth / realWidth})` : "scale(1)";
+}
+window.addEventListener("resize", scaleLogo);
 
 /* AGE — Europe/Samara */
-const birthDate = new Date(2001, 1, 9, 0, 0, 0);
 const timeZone = "Europe/Samara";
+const birthDate = new Date(2001, 1, 9, 0, 0, 0);
 
 function getSamaraNow() {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -303,18 +335,22 @@ function getSamaraNow() {
 
 function updateAge() {
   const now = getSamaraNow();
-  let diff = Math.floor((now - birthDate) / 1000);
-  const y = Math.floor(diff / 31536000); diff %= 31536000;
-  const m = Math.floor(diff / 2592000); diff %= 2592000;
-  const d = Math.floor(diff / 86400); diff %= 86400;
-  const h = Math.floor(diff / 3600); diff %= 3600;
-  const min = Math.floor(diff / 60);
-  const s = diff % 60;
+  let y = now.getFullYear() - birthDate.getFullYear();
+  let m = now.getMonth() - birthDate.getMonth();
+  let d = now.getDate() - birthDate.getDate();
+  let h = now.getHours() - birthDate.getHours();
+  let min = now.getMinutes() - birthDate.getMinutes();
+  let s = now.getSeconds() - birthDate.getSeconds();
+
+  if (s < 0) { s += 60; min--; }
+  if (min < 0) { min += 60; h--; }
+  if (h < 0) { h += 24; d--; }
+  if (d < 0) { d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); m--; }
+  if (m < 0) { m += 12; y--; }
 
   document.getElementById("age").textContent =
     `${y}y ${m}m ${d}d ${h}h ${min}m ${s}s`;
 }
-
 updateAge();
 setInterval(updateAge, 1000);
 </script>
