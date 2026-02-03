@@ -51,26 +51,27 @@ body {
   );
 }
 
-/* ascii */
-.ascii {
-  font-size: 11px;
-  line-height: 1.1;
-  margin-bottom: 12px;
+/* boot screen */
+#boot {
   white-space: pre;
+  font-size: 11px;
+  line-height: 1.15;
 }
 
-/* typing */
-.line { opacity: 0; }
-.visible { opacity: 1; }
+/* content */
+#content { display: none; }
 
-/* links */
-ul { list-style: none; padding: 0; margin: 0; }
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 li { margin: 8px 0; }
 
 a {
   color: var(--green);
   text-decoration: none;
-  position: relative;
 }
 
 a:hover {
@@ -85,7 +86,6 @@ a:hover {
   100% { opacity: 1; }
 }
 
-/* sections */
 .section {
   margin-top: 14px;
   padding-top: 8px;
@@ -104,33 +104,15 @@ a:hover {
   color: var(--green-dim);
   margin-top: 6px;
 }
-
-.cursor::after {
-  content: "█";
-  animation: blink 1s steps(1) infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
 </style>
 </head>
 
 <body>
 <div class="terminal">
 
-<div class="ascii">
-███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
-██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
-███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
-╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
-███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
-╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
-</div>
-
 <div id="boot"></div>
 
-<div id="content" style="display:none">
+<div id="content">
   <ul>
     <li>> <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a></li>
     <li>> <a href="https://music.yandex.ru/artist/22019500" target="_blank">Yandex Music</a></li>
@@ -156,41 +138,39 @@ a:hover {
 </div>
 
 <script>
-const bootLines = [
-  "[ OK ] loading audio modules",
-  "[ OK ] syncing signal",
-  "[ OK ] encrypting channel",
-  "> ls"
-];
+const bootText = `
+███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
+██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
+███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
+╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
+███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
+╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+
+[ OK ] loading audio modules
+[ OK ] syncing signal
+[ OK ] encrypting channel
+> ls
+`;
 
 const boot = document.getElementById("boot");
 const content = document.getElementById("content");
+
 let i = 0;
+const speed = 12;
 
-function typeLine(text, cb) {
-  let j = 0;
-  const line = document.createElement("div");
-  boot.appendChild(line);
-  const interval = setInterval(() => {
-    line.textContent += text[j];
-    j++;
-    if (j === text.length) {
-      clearInterval(interval);
-      if (cb) setTimeout(cb, 400);
-    }
-  }, 25);
-}
-
-(function next() {
-  if (i < bootLines.length) {
-    typeLine(bootLines[i], next);
-    i++;
+function typeBoot() {
+  if (i < bootText.length) {
+    boot.textContent += bootText[i++];
+    setTimeout(typeBoot, speed);
   } else {
     setTimeout(() => {
+      boot.remove();          // ❗ полностью убираем загрузку
       content.style.display = "block";
-    }, 400);
+    }, 500);
   }
-})();
+}
+
+typeBoot();
 
 /* uptime + time */
 const start = Date.now();
