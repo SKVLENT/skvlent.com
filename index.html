@@ -30,7 +30,7 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 720px;
+  max-width: 760px;
   padding: 22px;
   border: 1px solid var(--green);
   box-shadow: 0 0 25px rgba(0,255,156,.25);
@@ -53,14 +53,24 @@ body {
 
 /* boot */
 #boot {
+  font-size: 12px;
+  white-space: pre;
+}
+
+/* terminal output */
+#line {
+  margin-bottom: 6px;
+}
+
+.prompt {
+  color: var(--green);
+}
+
+.ascii {
   white-space: pre;
   font-size: 11px;
   line-height: 1.15;
-}
-
-/* content */
-#content {
-  display: none;
+  margin: 10px 0;
 }
 
 ul {
@@ -70,7 +80,7 @@ ul {
 }
 
 li {
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 a {
@@ -91,14 +101,13 @@ a:hover {
 }
 
 .section {
-  margin-top: 14px;
-  padding-top: 8px;
+  margin-top: 12px;
+  padding-top: 6px;
   border-top: 1px dashed var(--green-dim);
-  opacity: .9;
 }
 
 .footer {
-  margin-top: 16px;
+  margin-top: 14px;
   font-size: 12px;
   opacity: .6;
 }
@@ -116,20 +125,32 @@ a:hover {
 
 <div id="boot"></div>
 
-<div id="content">
+<div id="content" style="display:none">
+
+  <div id="line" class="prompt">skvlent@web:~$ ls</div>
+
+  <div class="ascii">
+███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
+██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
+███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
+╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
+███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
+╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+  </div>
+
   <ul>
-    <li>> <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">Spotify</a></li>
-    <li>> <a href="https://music.yandex.ru/artist/22019500" target="_blank">Yandex Music</a></li>
-    <li>> <a href="https://www.instagram.com/skvlent" target="_blank">Instagram</a></li>
-    <li>> <a href="https://t.me/skvlent" target="_blank">Telegram</a></li>
-    <li>> <a href="mailto:skvlent@gmail.com">Contact via email</a></li>
+    <li>> <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a></li>
+    <li>> <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a></li>
+    <li>> <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a></li>
+    <li>> <a href="https://t.me/skvlent" target="_blank">telegram</a></li>
+    <li>> <a href="mailto:skvlent@gmail.com">contact_email</a></li>
   </ul>
 
   <div class="section">
-    donate
+    donate/
     <ul>
-      <li>> <a href="https://donate.skvlent.com" target="_blank">Donate (🇷🇺)</a></li>
-      <li>> <a href="https://donate.skvlent.com/crypto" target="_blank">Donate (Crypto)</a></li>
+      <li>> <a href="https://donate.skvlent.com" target="_blank">ru</a></li>
+      <li>> <a href="https://donate.skvlent.com/crypto" target="_blank">crypto</a></li>
     </ul>
   </div>
 
@@ -137,36 +158,24 @@ a:hover {
     connection stable.
     <div class="status" id="status"></div>
   </div>
+
 </div>
 
 </div>
 
 <script>
-const ascii = `
-███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
-██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
-███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
-╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
-███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
-╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
-`;
-
 const bootLines = [
   "[ OK ] loading audio modules",
   "[ OK ] syncing signal",
-  "[ OK ] encrypting channel",
-  "> ls"
+  "[ OK ] encrypting channel"
 ];
 
 const boot = document.getElementById("boot");
 const content = document.getElementById("content");
 
-// ASCII сразу
-boot.textContent = ascii + "\n";
-
 let i = 0;
 
-function typeLine() {
+function typeBoot() {
   if (i < bootLines.length) {
     const line = document.createElement("div");
     boot.appendChild(line);
@@ -177,18 +186,18 @@ function typeLine() {
       if (j === bootLines[i].length) {
         clearInterval(interval);
         i++;
-        setTimeout(typeLine, 300);
+        setTimeout(typeBoot, 250);
       }
-    }, 25);
+    }, 20);
   } else {
     setTimeout(() => {
-      boot.remove();          // убираем boot полностью
+      boot.remove();
       content.style.display = "block";
-    }, 500);
+    }, 400);
   }
 }
 
-typeLine();
+typeBoot();
 
 /* uptime + time */
 const start = Date.now();
