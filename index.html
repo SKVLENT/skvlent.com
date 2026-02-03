@@ -7,9 +7,13 @@
 
 <style>
 :root {
-  --green: #00ff9c;
-  --green-dim: rgba(0,255,156,.6);
-  --bg: #000;
+  --bg: #272822;
+  --fg: #f8f8f2;
+  --green: #a6e22e;
+  --yellow: #e6db74;
+  --blue: #66d9ef;
+  --cyan: #2de0a7;
+  --dim: #75715e;
 }
 
 html, body {
@@ -17,7 +21,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: var(--bg);
-  color: var(--green);
+  color: var(--fg);
   font-family: "Courier New", monospace;
 }
 
@@ -32,11 +36,12 @@ body {
   width: 92%;
   max-width: 900px;
   padding: 22px;
-  border: 1px solid var(--green);
-  box-shadow: 0 0 25px rgba(0,255,156,.25);
+  border-radius: 6px;
+  box-shadow: 0 0 30px rgba(0,0,0,.6);
+  background: #1e1f1c;
 }
 
-/* scanlines */
+/* scanlines (very subtle) */
 .terminal::before {
   content: "";
   position: absolute;
@@ -44,8 +49,8 @@ body {
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255,255,255,.03),
-    rgba(255,255,255,.03) 1px,
+    rgba(255,255,255,.02),
+    rgba(255,255,255,.02) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -55,6 +60,7 @@ body {
 #boot {
   font-size: 12px;
   white-space: pre;
+  color: var(--dim);
 }
 
 /* content */
@@ -67,6 +73,7 @@ body {
   white-space: pre;
   font-size: 11px;
   line-height: 1.15;
+  color: var(--fg);
   margin-bottom: 10px;
 }
 
@@ -75,46 +82,50 @@ body {
   margin-bottom: 6px;
 }
 
-/* ls output in columns */
+.prompt .user {
+  color: var(--green);
+}
+
+.prompt .path {
+  color: var(--blue);
+}
+
+.prompt .cmd {
+  color: var(--yellow);
+}
+
+/* ls output (columns like Linux) */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 2px 14px;
+  gap: 2px 16px;
 }
 
 /* items */
 .ls a {
-  color: var(--green);
+  color: var(--cyan);
   text-decoration: none;
 }
 
-.ls a.dir::after {
-  content: "/";
+.ls a.dir {
+  color: var(--blue);
 }
 
 .ls a:hover {
-  color: #fff;
-  text-shadow: 0 0 6px var(--green);
-  animation: flicker .15s infinite;
-}
-
-@keyframes flicker {
-  0% { opacity: 1; }
-  50% { opacity: .6; }
-  100% { opacity: 1; }
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(102,217,239,.8);
 }
 
 /* footer */
 .footer {
   margin-top: 14px;
   font-size: 12px;
-  opacity: .6;
+  color: var(--dim);
 }
 
 .status {
   font-size: 11px;
-  color: var(--green-dim);
-  margin-top: 6px;
+  margin-top: 4px;
 }
 </style>
 </head>
@@ -135,7 +146,10 @@ body {
 ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
 </div>
 
-<div class="prompt">skvlent@web:~$ ls</div>
+<div class="prompt">
+  <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
+  <span class="cmd">ls</span>
+</div>
 
 <div class="ls">
   <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
@@ -197,7 +211,7 @@ setInterval(() => {
   const now = new Date();
   const uptime = Math.floor((Date.now() - start) / 1000);
   document.getElementById("status").textContent =
-    `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()} · signal: ███████░`;
+    `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()}`;
 }, 1000);
 </script>
 
