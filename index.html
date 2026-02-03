@@ -34,9 +34,7 @@ html, body {
     Consolas,
     monospace;
   font-weight: 500;
-  letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -62,7 +60,6 @@ body {
   display: flex;
   align-items: center;
   padding: 0 12px;
-  user-select: none;
 }
 
 .window-controls {
@@ -75,23 +72,21 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  opacity: 0.85;
 }
-
 .ctrl.close { background: #ff5f56; }
 .ctrl.min   { background: #ffbd2e; }
 .ctrl.max   { background: #27c93f; }
 
 .window-title {
-  color: #d0d0d0;
   font-size: 12px;
+  color: #d0d0d0;
 }
 
 /* ===== TERMINAL BODY ===== */
 .terminal-body {
+  padding: 16px;
+  min-height: 520px;
   position: relative;
-  padding: 22px;
-  min-height: 520px; /* фиксированный размер с самого начала */
 }
 
 /* scanlines */
@@ -109,8 +104,8 @@ body {
   );
 }
 
-/* prompt */
-.prompt-line {
+/* ===== PROMPT ===== */
+.prompt {
   white-space: pre;
 }
 
@@ -118,7 +113,17 @@ body {
 .path { color: var(--blue); }
 .cmd  { color: var(--yellow); }
 
-/* neofetch layout */
+/* blinking cursor */
+.cursor {
+  display: inline-block;
+  margin-left: 1px;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ===== NEOFETCH ===== */
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -126,17 +131,12 @@ body {
   margin: 12px 0 16px;
 }
 
-/* hide neofetch on mobile */
 @media (max-width: 768px) {
-  .neofetch {
-    display: none;
-  }
+  .neofetch { display: none; }
 }
 
-/* autoscale wrapper */
 .logo-wrap { transform-origin: top left; }
 
-/* ASCII logo */
 .logo {
   white-space: pre;
   font-size: 7px;
@@ -144,15 +144,13 @@ body {
   color: var(--green);
 }
 
-/* info */
-.info .user { margin-bottom: 4px; }
 .info .label {
   color: var(--blue);
   display: inline-block;
   width: 90px;
 }
 
-/* ls */
+/* ===== LS ===== */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -160,7 +158,6 @@ body {
 }
 .ls a { color: var(--cyan); text-decoration: none; }
 .ls a.dir { color: var(--blue); }
-.ls a:hover { color: #fff; }
 
 /* footer */
 .footer {
@@ -185,12 +182,12 @@ body {
 
   <div class="terminal-body">
 
-    <!-- SHELL START -->
-    <div class="prompt-line" id="bootLine">
-      <span class="user">skvlent@web</span>:<span class="path">~</span>$ <span id="typedCmd"></span>
+    <!-- FIRST COMMAND -->
+    <div class="prompt" id="bootPrompt">
+<span class="user">skvlent@web</span>:<span class="path">~</span>$ <span id="typed"></span><span class="cursor">█</span>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- CONTENT -->
     <div id="content" style="display:none">
 
       <div class="neofetch">
@@ -254,8 +251,6 @@ body {
         </div>
 
         <div class="info">
-          <div class="user">skvlent@web</div>
-          <div>-------------</div>
           <div><span class="label">Name:</span> Ilyas</div>
           <div><span class="label">Age:</span> <span id="age"></span></div>
           <div><span class="label">Height:</span> 185 cm</div>
@@ -264,8 +259,8 @@ body {
         </div>
       </div>
 
-      <div class="prompt-line">
-        <span class="user">skvlent@web</span>:<span class="path">~</span>$ <span class="cmd">ls</span>
+      <div class="prompt">
+<span class="user">skvlent@web</span>:<span class="path">~</span>$ <span class="cmd">ls</span>
       </div>
 
       <div class="ls">
@@ -285,16 +280,18 @@ body {
 </div>
 
 <script>
-/* type skvlent.sh */
-const cmd = "skvlent.sh";
+/* TYPE ./skvlent.sh */
+const command = "./skvlent.sh";
 let i = 0;
-const out = document.getElementById("typedCmd");
+const typed = document.getElementById("typed");
 const content = document.getElementById("content");
+const cursor = document.querySelector(".cursor");
 
-const type = setInterval(() => {
-  out.textContent += cmd[i++];
-  if (i === cmd.length) {
-    clearInterval(type);
+const typer = setInterval(() => {
+  typed.textContent += command[i++];
+  if (i === command.length) {
+    clearInterval(typer);
+    cursor.remove();
     setTimeout(() => {
       content.style.display = "block";
       scaleLogo();
