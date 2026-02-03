@@ -51,7 +51,7 @@ body {
   );
 }
 
-/* boot screen */
+/* boot */
 #boot {
   white-space: pre;
   font-size: 11px;
@@ -59,7 +59,9 @@ body {
 }
 
 /* content */
-#content { display: none; }
+#content {
+  display: none;
+}
 
 ul {
   list-style: none;
@@ -67,7 +69,9 @@ ul {
   margin: 0;
 }
 
-li { margin: 8px 0; }
+li {
+  margin: 8px 0;
+}
 
 a {
   color: var(--green);
@@ -138,47 +142,64 @@ a:hover {
 </div>
 
 <script>
-const bootText = `
+const ascii = `
 ███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
 ██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
 ███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
 ╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
 ███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
 ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
-
-[ OK ] loading audio modules
-[ OK ] syncing signal
-[ OK ] encrypting channel
-> ls
 `;
+
+const bootLines = [
+  "[ OK ] loading audio modules",
+  "[ OK ] syncing signal",
+  "[ OK ] encrypting channel",
+  "> ls"
+];
 
 const boot = document.getElementById("boot");
 const content = document.getElementById("content");
 
-let i = 0;
-const speed = 12;
+// ASCII сразу
+boot.textContent = ascii + "\n";
 
-function typeBoot() {
-  if (i < bootText.length) {
-    boot.textContent += bootText[i++];
-    setTimeout(typeBoot, speed);
+let i = 0;
+
+function typeLine() {
+  if (i < bootLines.length) {
+    const line = document.createElement("div");
+    boot.appendChild(line);
+
+    let j = 0;
+    const interval = setInterval(() => {
+      line.textContent += bootLines[i][j++];
+      if (j === bootLines[i].length) {
+        clearInterval(interval);
+        i++;
+        setTimeout(typeLine, 300);
+      }
+    }, 25);
   } else {
     setTimeout(() => {
-      boot.remove();          // ❗ полностью убираем загрузку
+      boot.remove();          // убираем boot полностью
       content.style.display = "block";
     }, 500);
   }
 }
 
-typeBoot();
+typeLine();
 
 /* uptime + time */
 const start = Date.now();
 setInterval(() => {
   const now = new Date();
   const uptime = Math.floor((Date.now() - start) / 1000);
-  document.getElementById("status").textContent =
-    `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()} · signal: ███████░`;
+  const status = document.getElementById("status");
+  if (status) {
+    status.textContent =
+      `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()} · signal: ███████░`;
+  }
 }, 1000);
 </script>
 
