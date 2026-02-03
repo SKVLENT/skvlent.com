@@ -22,7 +22,25 @@ html, body {
   height: 100%;
   background: var(--bg);
   color: var(--fg);
-  font-family: "Courier New", monospace;
+
+  /* 🔥 КЛЮЧЕВОЕ МЕСТО */
+  font-family:
+    "SF Mono",
+    "JetBrains Mono",
+    "DejaVu Sans Mono",
+    "Ubuntu Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  /* сглаживание как в macOS / Linux */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -37,11 +55,11 @@ body {
   max-width: 900px;
   padding: 22px;
   border-radius: 6px;
-  box-shadow: 0 0 30px rgba(0,0,0,.6);
   background: #1e1f1c;
+  box-shadow: 0 0 30px rgba(0,0,0,.6);
 }
 
-/* scanlines (very subtle) */
+/* scanlines (очень мягко) */
 .terminal::before {
   content: "";
   position: absolute;
@@ -49,16 +67,16 @@ body {
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255,255,255,.02),
-    rgba(255,255,255,.02) 1px,
+    rgba(255,255,255,.015),
+    rgba(255,255,255,.015) 1px,
     transparent 1px,
-    transparent 3px
+    transparent 4px
   );
 }
 
 /* boot */
 #boot {
-  font-size: 12px;
+  font-size: 13px;
   white-space: pre;
   color: var(--dim);
 }
@@ -71,9 +89,8 @@ body {
 /* ascii */
 .ascii {
   white-space: pre;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.15;
-  color: var(--fg);
   margin-bottom: 10px;
 }
 
@@ -82,23 +99,15 @@ body {
   margin-bottom: 6px;
 }
 
-.prompt .user {
-  color: var(--green);
-}
+.prompt .user { color: var(--green); }
+.prompt .path { color: var(--blue); }
+.prompt .cmd  { color: var(--yellow); }
 
-.prompt .path {
-  color: var(--blue);
-}
-
-.prompt .cmd {
-  color: var(--yellow);
-}
-
-/* ls output (columns like Linux) */
+/* ls output (Linux-like columns) */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 2px 16px;
+  gap: 2px 18px;
 }
 
 /* items */
