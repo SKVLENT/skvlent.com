@@ -45,25 +45,20 @@ body {
   justify-content: center;
 }
 
-/* TERMINAL WINDOW */
+/* ===== TERMINAL WINDOW ===== */
 .terminal {
-  position: relative;
   width: 92%;
   max-width: 980px;
   background: var(--panel);
   border-radius: 8px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.6);
+  box-shadow: 0 20px 40px rgba(0,0,0,.65);
   overflow: hidden;
 }
 
-/* TITLE BAR (LINUX STYLE) */
+/* ===== TITLE BAR ===== */
 .titlebar {
   height: 34px;
-  background: linear-gradient(
-    to bottom,
-    #32332d,
-    var(--panel-top)
-  );
+  background: linear-gradient(to bottom, #32332d, var(--panel-top));
   display: flex;
   align-items: center;
   padding: 0 12px;
@@ -84,8 +79,8 @@ body {
 }
 
 .ctrl.close { background: #ff5f56; }
-.ctrl.min { background: #ffbd2e; }
-.ctrl.max { background: #27c93f; }
+.ctrl.min   { background: #ffbd2e; }
+.ctrl.max   { background: #27c93f; }
 
 .window-title {
   color: #d0d0d0;
@@ -95,13 +90,13 @@ body {
   text-overflow: ellipsis;
 }
 
-/* TERMINAL CONTENT */
+/* ===== TERMINAL BODY ===== */
 .terminal-body {
-  padding: 22px;
   position: relative;
+  padding: 22px;
 }
 
-/* scanlines */
+/* scanlines only inside body */
 .terminal-body::before {
   content: "";
   position: absolute;
@@ -198,7 +193,7 @@ body {
 
 <div class="terminal">
 
-  <!-- WINDOW HEADER -->
+  <!-- TITLE BAR -->
   <div class="titlebar">
     <div class="window-controls">
       <div class="ctrl close"></div>
@@ -208,7 +203,7 @@ body {
     <div class="window-title">skvlent@web: ~</div>
   </div>
 
-  <!-- TERMINAL BODY -->
+  <!-- BODY -->
   <div class="terminal-body">
 
     <div id="boot"></div>
@@ -218,7 +213,7 @@ body {
       <!-- NEOFETCH -->
       <div class="neofetch">
         <div class="logo-wrap" id="logoWrap">
-<pre class="logo" id="logo">                                           
+<pre class="logo" id="logo">
                             .... ..       .......-.:.....:.-::......                                
                          ....  ..    .........-:::::.......=@@@@#+@#=:                              
                       .:-..  .    ...   .......... .#@@@%=:.  :::*.:.:=:                            
@@ -349,9 +344,8 @@ function scaleLogo() {
   if (!wrap || !logo) return;
   const maxWidth = wrap.parentElement.offsetWidth;
   const realWidth = logo.scrollWidth;
-  let scale = 1;
-  if (realWidth > maxWidth) scale = maxWidth / realWidth;
-  wrap.style.transform = `scale(${scale})`;
+  wrap.style.transform =
+    realWidth > maxWidth ? `scale(${maxWidth / realWidth})` : "scale(1)";
 }
 window.addEventListener("resize", scaleLogo);
 
@@ -360,7 +354,6 @@ const timeZone = "Europe/Samara";
 const birthDate = new Date(2001, 1, 9, 0, 0, 0);
 
 function getSamaraNow() {
-  const now = new Date();
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone,
     year: "numeric",
@@ -370,16 +363,9 @@ function getSamaraNow() {
     minute: "numeric",
     second: "numeric",
     hour12: false
-  }).formatToParts(now);
-  const get = t => Number(parts.find(p => p.type === t).value);
-  return new Date(
-    get("year"),
-    get("month") - 1,
-    get("day"),
-    get("hour"),
-    get("minute"),
-    get("second")
-  );
+  }).formatToParts(new Date());
+  const g = t => Number(parts.find(p => p.type === t).value);
+  return new Date(g("year"), g("month") - 1, g("day"), g("hour"), g("minute"), g("second"));
 }
 
 function updateAge() {
@@ -394,10 +380,7 @@ function updateAge() {
   if (s < 0) { s += 60; min--; }
   if (min < 0) { min += 60; h--; }
   if (h < 0) { h += 24; d--; }
-  if (d < 0) {
-    d += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-    m--;
-  }
+  if (d < 0) { d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); m--; }
   if (m < 0) { m += 12; y--; }
 
   document.getElementById("age").textContent =
