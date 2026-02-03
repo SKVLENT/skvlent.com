@@ -296,23 +296,87 @@ function scaleLogo() {
 }
 window.addEventListener("resize", scaleLogo);
 
-/* AGE CALCULATION */
-const birthDate = new Date(2001, 1, 9, 0, 0, 0); // 09.02.2001 00:00
+<script>
+
+/* AGE CALCULATION — Europe/Samara (UTC+04:00) */
+
+const timeZone = "Europe/Samara";
+
+/* birth date: 09.02.2001 00:00:00 Samara time */
+const birthSamara = {
+  year: 2001,
+  month: 1,   // February (0-based)
+  day: 9,
+  hour: 0,
+  minute: 0,
+  second: 0
+};
+
+/* get current Date object in Samara timezone */
+function getSamaraNow() {
+  const now = new Date();
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false
+  }).formatToParts(now);
+
+  const get = t => Number(parts.find(p => p.type === t).value);
+
+  return new Date(
+    get("year"),
+    get("month") - 1,
+    get("day"),
+    get("hour"),
+    get("minute"),
+    get("second")
+  );
+}
+
+/* birth Date object in Samara timezone */
+const birthDate = new Date(
+  birthSamara.year,
+  birthSamara.month,
+  birthSamara.day,
+  birthSamara.hour,
+  birthSamara.minute,
+  birthSamara.second
+);
 
 function updateAge() {
-  const now = new Date();
+  const now = getSamaraNow();
+
   let years = now.getFullYear() - birthDate.getFullYear();
   let months = now.getMonth() - birthDate.getMonth();
   let days = now.getDate() - birthDate.getDate();
   let hours = now.getHours() - birthDate.getHours();
+  let minutes = now.getMinutes() - birthDate.getMinutes();
+  let seconds = now.getSeconds() - birthDate.getSeconds();
 
+  if (seconds < 0) {
+    seconds += 60;
+    minutes--;
+  }
+  if (minutes < 0) {
+    minutes += 60;
+    hours--;
+  }
   if (hours < 0) {
     hours += 24;
     days--;
   }
   if (days < 0) {
-    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-    days += prevMonth;
+    const prevMonthDays = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      0
+    ).getDate();
+    days += prevMonthDays;
     months--;
   }
   if (months < 0) {
@@ -321,7 +385,7 @@ function updateAge() {
   }
 
   document.getElementById("age").textContent =
-    `${years}y ${months}m ${days}d ${hours}h`;
+    `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
 updateAge();
