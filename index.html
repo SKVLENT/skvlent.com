@@ -10,7 +10,8 @@
   --bg: #272822;
   --panel: #1e1f1c;
   --fg: #f8f8f2;
-  --green: #a6e22e;
+  --green1: #a6e22e;
+  --green2: #66d9ef;
   --yellow: #e6db74;
   --blue: #66d9ef;
   --cyan: #2de0a7;
@@ -51,14 +52,14 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 960px;
+  max-width: 980px;
   padding: 22px;
   background: var(--panel);
   border-radius: 6px;
   box-shadow: 0 0 30px rgba(0,0,0,.6);
 }
 
-/* scanlines (subtle) */
+/* scanlines */
 .terminal::before {
   content: "";
   position: absolute;
@@ -81,11 +82,9 @@ body {
 }
 
 /* content */
-#content {
-  display: none;
-}
+#content { display: none; }
 
-/* neofetch */
+/* neofetch layout */
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -93,54 +92,46 @@ body {
   margin-bottom: 14px;
 }
 
+/* LOGO */
 .logo {
   white-space: pre;
-  color: var(--green);
+  line-height: 1.05;
+  font-size: 12px;
 }
 
-.info div {
-  line-height: 1.45;
-}
+/* gradient-like coloring (neofetch style) */
+.c1 { color: #a6e22e; }
+.c2 { color: #8be9fd; }
+.c3 { color: #66d9ef; }
 
-.info .user {
-  color: var(--green);
-}
-
+/* info */
+.info .user { color: var(--green1); }
 .info .label {
   color: var(--blue);
-  min-width: 80px;
   display: inline-block;
+  width: 90px;
 }
-
-.info .value {
-  color: var(--fg);
-}
+.info .value { color: var(--fg); }
 
 /* prompt */
 .prompt {
   margin: 10px 0 6px;
 }
-
-.prompt .user { color: var(--green); }
+.prompt .user { color: var(--green1); }
 .prompt .path { color: var(--blue); }
 .prompt .cmd  { color: var(--yellow); }
 
-/* ls output */
+/* ls */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
-
 .ls a {
   color: var(--cyan);
   text-decoration: none;
 }
-
-.ls a.dir {
-  color: var(--blue);
-}
-
+.ls a.dir { color: var(--blue); }
 .ls a:hover {
   color: #fff;
   text-shadow: 0 0 6px rgba(102,217,239,.8);
@@ -165,23 +156,28 @@ body {
   <!-- NEOFETCH -->
   <div class="neofetch">
     <div class="logo">
-   ██████╗
-  ██╔════╝
-  ██║  ███╗
-  ██║   ██║
-  ╚██████╔╝
-   ╚═════╝
+<span class="c1">      SSSSSSSSS</span>
+<span class="c1">   SSSSSSSSSSSSSSS</span>
+<span class="c2"> SSSSSSS       SSSSS</span>
+<span class="c2">SSSSS     SSSSS     SSSSS</span>
+<span class="c2">SSSS     SSSSSSS     SSSS</span>
+<span class="c3">SSSS       SSS       SSSS</span>
+<span class="c3">SSSS     SSSSSSS     SSSS</span>
+<span class="c2">SSSSS     SSSSS     SSSSS</span>
+<span class="c2"> SSSSSSS       SSSSS</span>
+<span class="c1">   SSSSSSSSSSSSSSS</span>
+<span class="c1">      SSSSSSSSS</span>
     </div>
 
     <div class="info">
       <div class="user">skvlent@web</div>
       <div>-------------</div>
-      <div><span class="label">OS:</span> <span class="value">SKVLENT Web</span></div>
-      <div><span class="label">Host:</span> <span class="value">skvlent.com</span></div>
-      <div><span class="label">Shell:</span> <span class="value">websh</span></div>
-      <div><span class="label">Uptime:</span> <span class="value" id="uptime"></span></div>
-      <div><span class="label">Links:</span> <span class="value">spotify instagram telegram</span></div>
-      <div><span class="label">Donate:</span> <span class="value">ru crypto</span></div>
+      <div><span class="label">OS:</span><span class="value">SKVLENT Web</span></div>
+      <div><span class="label">Host:</span><span class="value">skvlent.com</span></div>
+      <div><span class="label">Shell:</span><span class="value">websh</span></div>
+      <div><span class="label">Uptime:</span><span class="value" id="uptime"></span></div>
+      <div><span class="label">Links:</span><span class="value">spotify instagram telegram</span></div>
+      <div><span class="label">Donate:</span><span class="value">ru crypto</span></div>
     </div>
   </div>
 
@@ -219,12 +215,10 @@ const boot = document.getElementById("boot");
 const content = document.getElementById("content");
 
 let i = 0;
-
 function typeBoot() {
   if (i < bootLines.length) {
     const line = document.createElement("div");
     boot.appendChild(line);
-
     let j = 0;
     const interval = setInterval(() => {
       line.textContent += bootLines[i][j++];
@@ -241,14 +235,13 @@ function typeBoot() {
     }, 400);
   }
 }
-
 typeBoot();
 
 /* uptime */
 const start = Date.now();
 setInterval(() => {
-  const uptime = Math.floor((Date.now() - start) / 1000);
-  document.getElementById("uptime").textContent = uptime + "s";
+  document.getElementById("uptime").textContent =
+    Math.floor((Date.now() - start) / 1000) + "s";
 }, 1000);
 </script>
 
