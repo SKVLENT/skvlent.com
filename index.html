@@ -10,8 +10,7 @@
   --bg: #272822;
   --panel: #1e1f1c;
   --fg: #f8f8f2;
-  --green1: #a6e22e;
-  --green2: #66d9ef;
+  --green: #a6e22e;
   --yellow: #e6db74;
   --blue: #66d9ef;
   --cyan: #2de0a7;
@@ -52,14 +51,14 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 980px;
+  max-width: 1100px;
   padding: 22px;
   background: var(--panel);
   border-radius: 6px;
   box-shadow: 0 0 30px rgba(0,0,0,.6);
 }
 
-/* scanlines */
+/* subtle scanlines */
 .terminal::before {
   content: "";
   position: absolute;
@@ -82,58 +81,65 @@ body {
 }
 
 /* content */
-#content { display: none; }
+#content {
+  display: none;
+}
 
 /* neofetch layout */
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: 28px;
-  margin-bottom: 14px;
+  gap: 32px;
+  margin-bottom: 18px;
 }
 
-/* LOGO */
+/* ASCII logo */
 .logo {
   white-space: pre;
+  font-size: 11px;
   line-height: 1.05;
-  font-size: 12px;
+  color: var(--green);
 }
 
-/* gradient-like coloring (neofetch style) */
-.c1 { color: #a6e22e; }
-.c2 { color: #8be9fd; }
-.c3 { color: #66d9ef; }
+/* neofetch info */
+.info .user {
+  color: var(--green);
+  margin-bottom: 2px;
+}
 
-/* info */
-.info .user { color: var(--green1); }
 .info .label {
   color: var(--blue);
   display: inline-block;
-  width: 90px;
+  width: 80px;
 }
-.info .value { color: var(--fg); }
 
 /* prompt */
 .prompt {
   margin: 10px 0 6px;
 }
-.prompt .user { color: var(--green1); }
+
+.prompt .user { color: var(--green); }
 .prompt .path { color: var(--blue); }
 .prompt .cmd  { color: var(--yellow); }
 
-/* ls */
+/* ls output */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
+
 .ls a {
   color: var(--cyan);
   text-decoration: none;
 }
-.ls a.dir { color: var(--blue); }
+
+.ls a.dir {
+  color: var(--blue);
+}
+
 .ls a:hover {
-  color: #fff;
+  color: #ffffff;
   text-shadow: 0 0 6px rgba(102,217,239,.8);
 }
 
@@ -155,29 +161,35 @@ body {
 
   <!-- NEOFETCH -->
   <div class="neofetch">
-    <div class="logo">
-<span class="c1">      SSSSSSSSS</span>
-<span class="c1">   SSSSSSSSSSSSSSS</span>
-<span class="c2"> SSSSSSS       SSSSS</span>
-<span class="c2">SSSSS     SSSSS     SSSSS</span>
-<span class="c2">SSSS     SSSSSSS     SSSS</span>
-<span class="c3">SSSS       SSS       SSSS</span>
-<span class="c3">SSSS     SSSSSSS     SSSS</span>
-<span class="c2">SSSSS     SSSSS     SSSSS</span>
-<span class="c2"> SSSSSSS       SSSSS</span>
-<span class="c1">   SSSSSSSSSSSSSSS</span>
-<span class="c1">      SSSSSSSSS</span>
-    </div>
+    <pre class="logo">
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+               AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          AAAAAAAAAAAA
+          AAAAAAAAAAAAAAAAAAAAAAAAAAA
+           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+              AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                              AAAAAAAAAAAAAA
+                               AAAAAAAAAAAAA
+       AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    </pre>
 
     <div class="info">
       <div class="user">skvlent@web</div>
       <div>-------------</div>
-      <div><span class="label">OS:</span><span class="value">SKVLENT Web</span></div>
-      <div><span class="label">Host:</span><span class="value">skvlent.com</span></div>
-      <div><span class="label">Shell:</span><span class="value">websh</span></div>
-      <div><span class="label">Uptime:</span><span class="value" id="uptime"></span></div>
-      <div><span class="label">Links:</span><span class="value">spotify instagram telegram</span></div>
-      <div><span class="label">Donate:</span><span class="value">ru crypto</span></div>
+      <div><span class="label">OS:</span> SKVLENT Web</div>
+      <div><span class="label">Host:</span> skvlent.com</div>
+      <div><span class="label">Shell:</span> websh</div>
+      <div><span class="label">Uptime:</span> <span id="uptime"></span></div>
+      <div><span class="label">Links:</span> spotify instagram telegram</div>
+      <div><span class="label">Donate:</span> ru crypto</div>
     </div>
   </div>
 
@@ -205,6 +217,7 @@ body {
 </div>
 
 <script>
+/* boot sequence */
 const bootLines = [
   "[ OK ] loading audio modules",
   "[ OK ] syncing signal",
