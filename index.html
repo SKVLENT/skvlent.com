@@ -30,7 +30,7 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 760px;
+  max-width: 820px;
   padding: 22px;
   border: 1px solid var(--green);
   box-shadow: 0 0 25px rgba(0,255,156,.25);
@@ -57,38 +57,37 @@ body {
   white-space: pre;
 }
 
-/* terminal output */
-#line {
-  margin-bottom: 6px;
-}
-
-.prompt {
-  color: var(--green);
+/* content */
+#content {
+  display: none;
 }
 
 .ascii {
   white-space: pre;
   font-size: 11px;
   line-height: 1.15;
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* prompt */
+.prompt {
+  margin-top: 6px;
+  margin-bottom: 4px;
 }
 
-li {
-  margin: 6px 0;
+/* ls output */
+.ls {
+  white-space: pre-wrap;
+  word-spacing: 14px;
 }
 
-a {
+/* links */
+.ls a {
   color: var(--green);
   text-decoration: none;
 }
 
-a:hover {
+.ls a:hover {
   color: #fff;
   text-shadow: 0 0 6px var(--green);
   animation: flicker .15s infinite;
@@ -100,12 +99,7 @@ a:hover {
   100% { opacity: 1; }
 }
 
-.section {
-  margin-top: 12px;
-  padding-top: 6px;
-  border-top: 1px dashed var(--green-dim);
-}
-
+/* footer */
 .footer {
   margin-top: 14px;
   font-size: 12px;
@@ -125,42 +119,35 @@ a:hover {
 
 <div id="boot"></div>
 
-<div id="content" style="display:none">
+<div id="content">
 
-  <div id="line" class="prompt">skvlent@web:~$ ls</div>
-
-  <div class="ascii">
+<div class="ascii">
 ███████╗██╗  ██╗██╗   ██╗██╗     ███████╗███╗   ██╗████████╗
 ██╔════╝██║ ██╔╝██║   ██║██║     ██╔════╝████╗  ██║╚══██╔══╝
 ███████╗█████╔╝ ██║   ██║██║     █████╗  ██╔██╗ ██║   ██║
 ╚════██║██╔═██╗ ██║   ██║██║     ██╔══╝  ██║╚██╗██║   ██║
 ███████║██║  ██╗╚██████╔╝███████╗███████╗██║ ╚████║   ██║
 ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝
-  </div>
-
-  <ul>
-    <li>> <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a></li>
-    <li>> <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a></li>
-    <li>> <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a></li>
-    <li>> <a href="https://t.me/skvlent" target="_blank">telegram</a></li>
-    <li>> <a href="mailto:skvlent@gmail.com">contact_email</a></li>
-  </ul>
-
-  <div class="section">
-    donate/
-    <ul>
-      <li>> <a href="https://donate.skvlent.com" target="_blank">ru</a></li>
-      <li>> <a href="https://donate.skvlent.com/crypto" target="_blank">crypto</a></li>
-    </ul>
-  </div>
-
-  <div class="footer">
-    connection stable.
-    <div class="status" id="status"></div>
-  </div>
-
 </div>
 
+<div class="prompt">skvlent@web:~$ ls</div>
+
+<div class="ls">
+<a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
+<a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
+<a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
+<a href="https://t.me/skvlent" target="_blank">telegram</a>
+<a href="mailto:skvlent@gmail.com">contact_email</a>
+<a href="https://donate.skvlent.com" target="_blank">donate/ru</a>
+<a href="https://donate.skvlent.com/crypto" target="_blank">donate/crypto</a>
+</div>
+
+<div class="footer">
+  connection stable.
+  <div class="status" id="status"></div>
+</div>
+
+</div>
 </div>
 
 <script>
