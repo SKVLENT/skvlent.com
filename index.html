@@ -27,16 +27,12 @@ html, body {
   font-family:
     "SF Mono",
     "JetBrains Mono",
-    "DejaVu Sans Mono",
-    "Ubuntu Mono",
     Menlo,
     Monaco,
     Consolas,
     monospace;
   font-weight: 500;
   letter-spacing: 0.02em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -45,24 +41,23 @@ body {
   justify-content: center;
 }
 
-/* ===== TERMINAL WINDOW ===== */
+/* TERMINAL */
 .terminal {
-  width: 92%;
-  max-width: 980px;
+  width: 900px;
+  height: 520px;
   background: var(--panel);
   border-radius: 8px;
   box-shadow: 0 20px 40px rgba(0,0,0,.65);
   overflow: hidden;
 }
 
-/* ===== TITLE BAR ===== */
+/* TITLE BAR */
 .titlebar {
   height: 34px;
   background: linear-gradient(to bottom, #32332d, var(--panel-top));
   display: flex;
   align-items: center;
   padding: 0 12px;
-  user-select: none;
 }
 
 .window-controls {
@@ -75,28 +70,23 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  opacity: 0.85;
 }
 
 .ctrl.close { background: #ff5f56; }
-.ctrl.min   { background: #ffbd2e; }
-.ctrl.max   { background: #27c93f; }
+.ctrl.min { background: #ffbd2e; }
+.ctrl.max { background: #27c93f; }
 
 .window-title {
-  color: #d0d0d0;
   font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #d0d0d0;
 }
 
-/* ===== TERMINAL BODY ===== */
+/* BODY */
 .terminal-body {
-  position: relative;
   padding: 22px;
+  position: relative;
 }
 
-/* scanlines only inside body */
 .terminal-body::before {
   content: "";
   position: absolute;
@@ -111,37 +101,26 @@ body {
   );
 }
 
-/* boot */
-#boot {
-  font-size: 13px;
+/* PROMPT */
+.prompt-line {
   white-space: pre;
-  color: var(--dim);
 }
 
-/* content */
+.user { color: var(--green); }
+.path { color: var(--blue); }
+.cmd  { color: var(--yellow); }
+
+/* CONTENT */
 #content { display: none; }
 
-/* neofetch layout */
+/* NEOFETCH */
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 28px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-/* hide neofetch on mobile */
-@media (max-width: 768px) {
-  .neofetch {
-    display: none;
-  }
-}
-
-/* autoscale wrapper */
-.logo-wrap {
-  transform-origin: top left;
-}
-
-/* ASCII logo */
 .logo {
   white-space: pre;
   font-size: 7px;
@@ -149,40 +128,26 @@ body {
   color: var(--green);
 }
 
-/* info */
-.info .user {
-  color: var(--green);
-  margin-bottom: 4px;
-}
-
 .info .label {
-  color: var(--blue);
   display: inline-block;
   width: 90px;
+  color: var(--blue);
 }
 
-/* prompt */
-.prompt { margin: 10px 0 6px; }
-.prompt .user { color: var(--green); }
-.prompt .path { color: var(--blue); }
-.prompt .cmd  { color: var(--yellow); }
-
-/* ls */
+/* LS */
 .ls {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 2px 18px;
 }
-.ls a { color: var(--cyan); text-decoration: none; }
-.ls a.dir { color: var(--blue); }
-.ls a:hover {
-  color: #fff;
-  text-shadow: 0 0 6px rgba(102,217,239,.8);
+.ls a {
+  color: var(--cyan);
+  text-decoration: none;
 }
+.ls a.dir { color: var(--blue); }
 
-/* footer */
 .footer {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 12px;
   color: var(--dim);
 }
@@ -192,8 +157,6 @@ body {
 <body>
 
 <div class="terminal">
-
-  <!-- TITLE BAR -->
   <div class="titlebar">
     <div class="window-controls">
       <div class="ctrl close"></div>
@@ -203,17 +166,12 @@ body {
     <div class="window-title">skvlent@web: ~</div>
   </div>
 
-  <!-- BODY -->
   <div class="terminal-body">
-
-    <div id="boot"></div>
+    <div id="boot" class="prompt-line"></div>
 
     <div id="content">
-
-      <!-- NEOFETCH -->
       <div class="neofetch">
-        <div class="logo-wrap" id="logoWrap">
-<pre class="logo" id="logo">
+<pre class="logo">
                             .... ..       .......-.:.....:.-::......                                
                          ....  ..    .........-:::::.......=@@@@#+@#=:                              
                       .:-..  .    ...   .......... .#@@@%=:.  :::*.:.:=:                            
@@ -268,90 +226,65 @@ body {
 *%%%%%%%@@%%@@%#@@@@%@%%%%%%@@@%%%%%%%%#%%%%@@%%%%%%%%%%%#%%@%@@%%%#%%@%%%%@%%%%%%#%@%%%%%%%%@%%%%@+
 *%@@@%%@%@%%@%@@@%%%%@@@@@@%%%%%%@@@%%%@@%%%%%@@@%%%%%%%@@@%%@%%%@@@@%@%@@%%@%%%%%%%%@@%%%@@%%%@%@@+
 =**+***+++**+++*+++***++*++++++=+++++*++++**+***++*****+*++**++++++++++*+++++++++*++*++++*+++++++++:
-</pre>
-        </div>
 
+</pre>
         <div class="info">
           <div class="user">skvlent@web</div>
           <div>-------------</div>
           <div><span class="label">Name:</span> Ilyas</div>
           <div><span class="label">Age:</span> <span id="age"></span></div>
-          <div><span class="label">Height:</span> 185 cm</div>
-          <div><span class="label">Weight:</span> 75 kg</div>
           <div><span class="label">Timezone:</span> Europe/Samara</div>
         </div>
       </div>
 
-      <div class="prompt">
-        <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
-        <span class="cmd">ls</span>
+      <div class="prompt-line">
+<span class="user">skvlent@web</span>:<span class="path">~</span>$ <span class="cmd">ls</span>
       </div>
 
       <div class="ls">
-        <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
-        <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
-        <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
+        <a href="https://open.spotify.com" target="_blank">spotify</a>
+        <a href="https://instagram.com/skvlent" target="_blank">instagram</a>
         <a href="https://t.me/skvlent" target="_blank">telegram</a>
         <a href="mailto:skvlent@gmail.com">contact_email</a>
-        <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
-        <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
+        <a href="#" class="dir">donate/</a>
       </div>
 
       <div class="footer">connection stable.</div>
-
     </div>
   </div>
 </div>
 
 <script>
-/* boot */
-const bootLines = [
-  "[ OK ] loading audio modules",
-  "[ OK ] syncing signal",
-  "[ OK ] encrypting channel"
-];
-
 const boot = document.getElementById("boot");
 const content = document.getElementById("content");
-let i = 0;
 
-(function typeBoot(){
-  if (i < bootLines.length) {
-    const line = document.createElement("div");
-    boot.appendChild(line);
-    let j = 0;
-    const t = setInterval(() => {
-      line.textContent += bootLines[i][j++];
-      if (j === bootLines[i].length) {
-        clearInterval(t);
-        i++;
-        setTimeout(typeBoot, 220);
-      }
-    }, 18);
-  } else {
-    setTimeout(() => {
-      boot.remove();
-      content.style.display = "block";
-      scaleLogo();
-    }, 400);
+const prompt = "skvlent@web:~$ ";
+const command = "skvlent.sh";
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function type(text, delay = 40) {
+  for (const c of text) {
+    boot.textContent += c;
+    await sleep(delay);
   }
+}
+
+(async function run() {
+  await type(prompt, 30);
+  await sleep(300);
+  await type(command, 60);
+  await sleep(400);
+  boot.textContent += "\n";
+  await sleep(300);
+  content.style.display = "block";
 })();
 
-/* autoscale ASCII */
-function scaleLogo() {
-  const wrap = document.getElementById("logoWrap");
-  const logo = document.getElementById("logo");
-  if (!wrap || !logo) return;
-  const maxWidth = wrap.parentElement.offsetWidth;
-  const realWidth = logo.scrollWidth;
-  wrap.style.transform =
-    realWidth > maxWidth ? `scale(${maxWidth / realWidth})` : "scale(1)";
-}
-window.addEventListener("resize", scaleLogo);
-
 /* AGE — Europe/Samara */
-const timeZone = "Europe/Samara";
 const birthDate = new Date(2001, 1, 9, 0, 0, 0);
+const timeZone = "Europe/Samara";
 
 function getSamaraNow() {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -370,18 +303,13 @@ function getSamaraNow() {
 
 function updateAge() {
   const now = getSamaraNow();
-  let y = now.getFullYear() - birthDate.getFullYear();
-  let m = now.getMonth() - birthDate.getMonth();
-  let d = now.getDate() - birthDate.getDate();
-  let h = now.getHours() - birthDate.getHours();
-  let min = now.getMinutes() - birthDate.getMinutes();
-  let s = now.getSeconds() - birthDate.getSeconds();
-
-  if (s < 0) { s += 60; min--; }
-  if (min < 0) { min += 60; h--; }
-  if (h < 0) { h += 24; d--; }
-  if (d < 0) { d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); m--; }
-  if (m < 0) { m += 12; y--; }
+  let diff = Math.floor((now - birthDate) / 1000);
+  const y = Math.floor(diff / 31536000); diff %= 31536000;
+  const m = Math.floor(diff / 2592000); diff %= 2592000;
+  const d = Math.floor(diff / 86400); diff %= 86400;
+  const h = Math.floor(diff / 3600); diff %= 3600;
+  const min = Math.floor(diff / 60);
+  const s = diff % 60;
 
   document.getElementById("age").textContent =
     `${y}y ${m}m ${d}d ${h}h ${min}m ${s}s`;
