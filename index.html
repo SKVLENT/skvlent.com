@@ -2,13 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>SKVLENT :: terminal</title>
+<title>skvlent@web: ~</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root {
   --bg: #272822;
   --panel: #1e1f1c;
+  --panel-top: #2a2b26;
   --fg: #f8f8f2;
   --green: #a6e22e;
   --yellow: #e6db74;
@@ -44,20 +45,64 @@ body {
   justify-content: center;
 }
 
-/* terminal window */
+/* TERMINAL WINDOW */
 .terminal {
   position: relative;
   width: 92%;
   max-width: 980px;
-  padding: 22px;
   background: var(--panel);
-  border-radius: 6px;
-  box-shadow: 0 0 30px rgba(0,0,0,.6);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.6);
   overflow: hidden;
 }
 
+/* TITLE BAR (LINUX STYLE) */
+.titlebar {
+  height: 34px;
+  background: linear-gradient(
+    to bottom,
+    #32332d,
+    var(--panel-top)
+  );
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  user-select: none;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.ctrl {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.ctrl.close { background: #ff5f56; }
+.ctrl.min { background: #ffbd2e; }
+.ctrl.max { background: #27c93f; }
+
+.window-title {
+  color: #d0d0d0;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* TERMINAL CONTENT */
+.terminal-body {
+  padding: 22px;
+  position: relative;
+}
+
 /* scanlines */
-.terminal::before {
+.terminal-body::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -150,16 +195,30 @@ body {
 </head>
 
 <body>
+
 <div class="terminal">
 
-<div id="boot"></div>
+  <!-- WINDOW HEADER -->
+  <div class="titlebar">
+    <div class="window-controls">
+      <div class="ctrl close"></div>
+      <div class="ctrl min"></div>
+      <div class="ctrl max"></div>
+    </div>
+    <div class="window-title">skvlent@web: ~</div>
+  </div>
 
-<div id="content">
+  <!-- TERMINAL BODY -->
+  <div class="terminal-body">
 
-  <!-- NEOFETCH (DESKTOP ONLY) -->
-  <div class="neofetch">
-    <div class="logo-wrap" id="logoWrap">
-<pre class="logo" id="logo">                                                                                 
+    <div id="boot"></div>
+
+    <div id="content">
+
+      <!-- NEOFETCH -->
+      <div class="neofetch">
+        <div class="logo-wrap" id="logoWrap">
+<pre class="logo" id="logo">                                           
                             .... ..       .......-.:.....:.-::......                                
                          ....  ..    .........-:::::.......=@@@@#+@#=:                              
                       .:-..  .    ...   .......... .#@@@%=:.  :::*.:.:=:                            
@@ -215,40 +274,38 @@ body {
 *%@@@%%@%@%%@%@@@%%%%@@@@@@%%%%%%@@@%%%@@%%%%%@@@%%%%%%%@@@%%@%%%@@@@%@%@@%%@%%%%%%%%@@%%%@@%%%@%@@+
 =**+***+++**+++*+++***++*++++++=+++++*++++**+***++*****+*++**++++++++++*+++++++++*++*++++*+++++++++:
 </pre>
+        </div>
+
+        <div class="info">
+          <div class="user">skvlent@web</div>
+          <div>-------------</div>
+          <div><span class="label">Name:</span> Ilyas</div>
+          <div><span class="label">Age:</span> <span id="age"></span></div>
+          <div><span class="label">Height:</span> 185 cm</div>
+          <div><span class="label">Weight:</span> 75 kg</div>
+          <div><span class="label">Timezone:</span> Europe/Samara</div>
+        </div>
+      </div>
+
+      <div class="prompt">
+        <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
+        <span class="cmd">ls</span>
+      </div>
+
+      <div class="ls">
+        <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
+        <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
+        <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
+        <a href="https://t.me/skvlent" target="_blank">telegram</a>
+        <a href="mailto:skvlent@gmail.com">contact_email</a>
+        <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
+        <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
+      </div>
+
+      <div class="footer">connection stable.</div>
+
     </div>
-
-    <div class="info">
-      <div class="user">skvlent@web</div>
-      <div>-------------</div>
-      <div><span class="label">Name:</span> Ilyas</div>
-      <div><span class="label">Age:</span> <span id="age"></span></div>
-      <div><span class="label">Height:</span> 185 cm</div>
-      <div><span class="label">Weight:</span> 75 kg</div>
-      <div><span class="label">Weight:</span> 75 kg</div>
-      <div><span class="label">Timezone:</span> Europe/Samara</div>
-      <div><span class="label">Nation:</span> Russian</div>
-    </div>
   </div>
-
-  <!-- LS -->
-  <div class="prompt">
-    <span class="user">skvlent@web</span>:<span class="path">~</span>$ 
-    <span class="cmd">ls</span>
-  </div>
-
-  <div class="ls">
-    <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
-    <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
-    <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
-    <a href="https://t.me/skvlent" target="_blank">telegram</a>
-    <a href="mailto:skvlent@gmail.com">contact_email</a>
-    <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
-    <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
-  </div>
-
-  <div class="footer">connection stable.</div>
-
-</div>
 </div>
 
 <script>
@@ -285,7 +342,7 @@ let i = 0;
   }
 })();
 
-/* auto-scale ASCII */
+/* autoscale ASCII */
 function scaleLogo() {
   const wrap = document.getElementById("logoWrap");
   const logo = document.getElementById("logo");
@@ -298,10 +355,8 @@ function scaleLogo() {
 }
 window.addEventListener("resize", scaleLogo);
 
-/* AGE — Europe/Samara (UTC+04:00) */
+/* AGE — Europe/Samara */
 const timeZone = "Europe/Samara";
-
-/* birth: 09.02.2001 00:00:00 Samara */
 const birthDate = new Date(2001, 1, 9, 0, 0, 0);
 
 function getSamaraNow() {
@@ -316,9 +371,7 @@ function getSamaraNow() {
     second: "numeric",
     hour12: false
   }).formatToParts(now);
-
   const get = t => Number(parts.find(p => p.type === t).value);
-
   return new Date(
     get("year"),
     get("month") - 1,
@@ -331,30 +384,24 @@ function getSamaraNow() {
 
 function updateAge() {
   const now = getSamaraNow();
+  let y = now.getFullYear() - birthDate.getFullYear();
+  let m = now.getMonth() - birthDate.getMonth();
+  let d = now.getDate() - birthDate.getDate();
+  let h = now.getHours() - birthDate.getHours();
+  let min = now.getMinutes() - birthDate.getMinutes();
+  let s = now.getSeconds() - birthDate.getSeconds();
 
-  let years = now.getFullYear() - birthDate.getFullYear();
-  let months = now.getMonth() - birthDate.getMonth();
-  let days = now.getDate() - birthDate.getDate();
-  let hours = now.getHours() - birthDate.getHours();
-  let minutes = now.getMinutes() - birthDate.getMinutes();
-  let seconds = now.getSeconds() - birthDate.getSeconds();
-
-  if (seconds < 0) { seconds += 60; minutes--; }
-  if (minutes < 0) { minutes += 60; hours--; }
-  if (hours < 0) { hours += 24; days--; }
-  if (days < 0) {
-    const prevMonthDays = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      0
-    ).getDate();
-    days += prevMonthDays;
-    months--;
+  if (s < 0) { s += 60; min--; }
+  if (min < 0) { min += 60; h--; }
+  if (h < 0) { h += 24; d--; }
+  if (d < 0) {
+    d += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    m--;
   }
-  if (months < 0) { months += 12; years--; }
+  if (m < 0) { m += 12; y--; }
 
   document.getElementById("age").textContent =
-    `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    `${y}y ${m}m ${d}d ${h}h ${min}m ${s}s`;
 }
 
 updateAge();
