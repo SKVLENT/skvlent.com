@@ -30,7 +30,7 @@ body {
 .terminal {
   position: relative;
   width: 92%;
-  max-width: 820px;
+  max-width: 900px;
   padding: 22px;
   border: 1px solid var(--green);
   box-shadow: 0 0 25px rgba(0,255,156,.25);
@@ -62,6 +62,7 @@ body {
   display: none;
 }
 
+/* ascii */
 .ascii {
   white-space: pre;
   font-size: 11px;
@@ -71,20 +72,24 @@ body {
 
 /* prompt */
 .prompt {
-  margin-top: 6px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-/* ls output */
+/* ls output in columns */
 .ls {
-  white-space: pre-wrap;
-  word-spacing: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2px 14px;
 }
 
-/* links */
+/* items */
 .ls a {
   color: var(--green);
   text-decoration: none;
+}
+
+.ls a.dir::after {
+  content: "/";
 }
 
 .ls a:hover {
@@ -133,13 +138,13 @@ body {
 <div class="prompt">skvlent@web:~$ ls</div>
 
 <div class="ls">
-<a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
-<a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
-<a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
-<a href="https://t.me/skvlent" target="_blank">telegram</a>
-<a href="mailto:skvlent@gmail.com">contact_email</a>
-<a href="https://donate.skvlent.com" target="_blank">donate/ru</a>
-<a href="https://donate.skvlent.com/crypto" target="_blank">donate/crypto</a>
+  <a href="https://open.spotify.com/artist/25x73HvVybv5FBZizveEsx" target="_blank">spotify</a>
+  <a href="https://music.yandex.ru/artist/22019500" target="_blank">yandex_music</a>
+  <a href="https://www.instagram.com/skvlent" target="_blank">instagram</a>
+  <a href="https://t.me/skvlent" target="_blank">telegram</a>
+  <a href="mailto:skvlent@gmail.com">contact_email</a>
+  <a href="https://donate.skvlent.com" target="_blank" class="dir">donate/ru</a>
+  <a href="https://donate.skvlent.com/crypto" target="_blank" class="dir">donate/crypto</a>
 </div>
 
 <div class="footer">
@@ -173,9 +178,9 @@ function typeBoot() {
       if (j === bootLines[i].length) {
         clearInterval(interval);
         i++;
-        setTimeout(typeBoot, 250);
+        setTimeout(typeBoot, 220);
       }
-    }, 20);
+    }, 18);
   } else {
     setTimeout(() => {
       boot.remove();
@@ -191,11 +196,8 @@ const start = Date.now();
 setInterval(() => {
   const now = new Date();
   const uptime = Math.floor((Date.now() - start) / 1000);
-  const status = document.getElementById("status");
-  if (status) {
-    status.textContent =
-      `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()} · signal: ███████░`;
-  }
+  document.getElementById("status").textContent =
+    `uptime: ${uptime}s · local time: ${now.toLocaleTimeString()} · signal: ███████░`;
 }, 1000);
 </script>
 
