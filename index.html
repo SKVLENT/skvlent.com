@@ -45,15 +45,16 @@ body {
   justify-content: center;
 }
 
+/* 🔒 ТЕРМИНАЛ КАК ОКНО */
 .terminal {
   position: relative;
-  width: 96%;
-  max-width: 1400px;
+  width: 92%;
+  max-width: 980px;          /* ← как раньше */
   padding: 22px;
   background: var(--panel);
   border-radius: 6px;
   box-shadow: 0 0 30px rgba(0,0,0,.6);
-  overflow-x: auto;
+  overflow: hidden;         /* ❗ ничего не раздвигает окно */
 }
 
 /* subtle scanlines */
@@ -85,11 +86,16 @@ body {
 .neofetch {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 32px;
-  margin-bottom: 18px;
+  gap: 28px;
+  margin-bottom: 16px;
 }
 
-/* ASCII LOGO — размер как просили */
+/* 🔥 ОБЁРТКА ДЛЯ АВТО-СКЕЙЛА */
+.logo-wrap {
+  transform-origin: top left;
+}
+
+/* ASCII logo (база) */
 .logo {
   white-space: pre;
   font-size: 7px;
@@ -115,7 +121,10 @@ body {
 }
 .ls a { color: var(--cyan); text-decoration: none; }
 .ls a.dir { color: var(--blue); }
-.ls a:hover { color: #fff; text-shadow: 0 0 6px rgba(102,217,239,.8); }
+.ls a:hover {
+  color: #fff;
+  text-shadow: 0 0 6px rgba(102,217,239,.8);
+}
 
 /* footer */
 .footer { margin-top: 14px; font-size: 12px; color: var(--dim); }
@@ -129,9 +138,10 @@ body {
 
 <div id="content">
 
-  <!-- NEOFETCH -->
   <div class="neofetch">
-<pre class="logo">
+    <!-- AUTO SCALE -->
+    <div class="logo-wrap" id="logoWrap">
+<pre class="logo" id="logo">
                 ... .   .....::::....:%@@@@+.                   
               :.. .  .. .  .....=#%@    ...= =.                 
              -:.:.:    .  .  ...   % ..       ..                
@@ -167,6 +177,7 @@ body {
 *%@%%@%%@%@@@@@%%%%@%%@%%%%%%@%%@%%%%%%%@%%#%%@%@%%@%%@@%%%%%@@+
 =+***+*+++*+*+**+++++=++*++*+**+*+*+*+**+++*+*==++++++*++*+*+++-
 </pre>
+    </div>
 
     <div class="info">
       <div class="user">skvlent@web</div>
@@ -224,6 +235,7 @@ let i = 0;
     setTimeout(() => {
       boot.remove();
       content.style.display = "block";
+      scaleLogo();
     }, 400);
   }
 })();
@@ -234,6 +246,22 @@ setInterval(() => {
   document.getElementById("uptime").textContent =
     Math.floor((Date.now() - start) / 1000) + "s";
 }, 1000);
+
+/* 🔥 AUTO SCALE ASCII */
+function scaleLogo() {
+  const wrap = document.getElementById("logoWrap");
+  const logo = document.getElementById("logo");
+  const maxWidth = wrap.parentElement.offsetWidth;
+  const realWidth = logo.scrollWidth;
+
+  let scale = 1;
+  if (realWidth > maxWidth) {
+    scale = maxWidth / realWidth;
+  }
+  wrap.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scaleLogo);
 </script>
 
 </body>
